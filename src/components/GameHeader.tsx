@@ -163,49 +163,86 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
       {/* Archive Game Selector Modal */}
       {showArchiveSelector && (
         <div 
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
           onClick={() => setShowArchiveSelector(false)}
         >
           <div 
-            className={`rounded-2xl p-6 max-w-md mx-4 shadow-2xl ${
+            className={`rounded-2xl p-6 max-w-3xl w-full max-h-[80vh] overflow-y-auto mx-4 shadow-2xl ${
               isDark ? 'bg-gray-800' : 'bg-white'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className={`text-xl font-bold mb-4 ${
+            <h2 className={`text-xl font-bold mb-2 ${
               isDark ? 'text-white' : 'text-gray-800'
             }`}>
-              🕰️ Play Archive Game
+              🕰️ Archive Games
             </h2>
             <p className={`text-sm mb-4 ${
               isDark ? 'text-gray-300' : 'text-gray-600'
             }`}>
-              Enter a game number to play past puzzles. Note: archive games don't count toward your statistics.
+              Play past puzzles. Archive games don't count toward your statistics.
             </p>
-            <div className="flex gap-2 mb-4">
-              <input
-                type="number"
-                min="1"
-                value={archiveNumber}
-                onChange={(e) => setArchiveNumber(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handlePlayArchive()}
-                placeholder="Game #"
-                className={`flex-1 px-4 py-2 rounded-lg border-2 ${
-                  isDark 
-                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                }`}
-                autoFocus
-              />
-              <button
-                onClick={handlePlayArchive}
-                disabled={!archiveNumber || parseInt(archiveNumber, 10) < 1}
-                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white 
-                           font-semibold rounded-lg transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Play
-              </button>
+            
+            {/* Grid of past games */}
+            <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 mb-4">
+              {Array.from({ length: gameNumber - 1 }, (_, i) => {
+                const num = gameNumber - 1 - i; // Reverse order (newest first)
+                const gameDate = new Date('2026-02-01');
+                gameDate.setDate(gameDate.getDate() + num - 1);
+                const dateStr = gameDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                
+                return (
+                  <button
+                    key={num}
+                    onClick={() => {
+                      onPlayArchive(num);
+                      setShowArchiveSelector(false);
+                      setArchiveNumber('');
+                    }}
+                    className={`p-3 rounded-lg font-semibold text-sm transition-all hover:scale-105 ${
+                      isDark
+                        ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
+                        : 'bg-purple-100 hover:bg-purple-200 text-purple-900'
+                    }`}
+                    title={dateStr}
+                  >
+                    <div className="text-base">#{num}</div>
+                    <div className="text-[10px] opacity-75">{dateStr}</div>
+                  </button>
+                );
+              })}
             </div>
+            
+            {/* Manual entry option */}
+            <div className={`border-t pt-4 mt-4 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+              <p className={`text-xs mb-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                Or enter a specific game number:
+              </p>
+              <div className="flex gap-2 mb-4">
+                <input
+                  type="number"
+                  min="1"
+                  value={archiveNumber}
+                  onChange={(e) => setArchiveNumber(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handlePlayArchive()}
+                  placeholder="Game #"
+                  className={`flex-1 px-4 py-2 rounded-lg border-2 ${
+                    isDark 
+                      ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  }`}
+                />
+                <button
+                  onClick={handlePlayArchive}
+                  disabled={!archiveNumber || parseInt(archiveNumber, 10) < 1}
+                  className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white 
+                             font-semibold rounded-lg transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Play
+                </button>
+              </div>
+            </div>
+            
             <button
               onClick={() => {
                 setShowArchiveSelector(false);
@@ -217,7 +254,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
                   : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
               }`}
             >
-              Cancel
+              Close
             </button>
           </div>
         </div>
