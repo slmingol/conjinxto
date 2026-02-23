@@ -1,5 +1,6 @@
 # Conjinxto
 
+[![Version](https://img.shields.io/github/package-json/v/slmingol/conjinxto?label=Version&color=brightgreen)](https://github.com/slmingol/conjinxto)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-19.2.4-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
