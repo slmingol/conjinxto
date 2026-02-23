@@ -9,7 +9,6 @@ interface GameHeaderProps {
   onShowStats: () => void;
   onShowSettings: () => void;
   onGetHint: () => void;
-  onShowInstructions: () => void;
   isComplete: boolean;
   theme: 'light' | 'dark';
   t: Translations;
@@ -23,7 +22,6 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   onShowStats,
   onShowSettings,
   onGetHint,
-  onShowInstructions,
   isComplete,
   theme,
   t,
@@ -37,16 +35,6 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
       </div>
       <div className="flex flex-col items-end gap-2">
         <div className="flex space-x-2">
-          <button
-            onClick={onShowInstructions}
-            className={`px-4 py-2 rounded-lg transition-colors shadow-md text-xs font-medium flex items-center ${
-              isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
-            }`}
-            title="How to Play"
-          >
-            <span className="text-base mr-1">❓</span>
-            {t.howToPlay}
-          </button>
           <button
             onClick={onShowSettings}
             className={`px-4 py-2 rounded-lg transition-colors shadow-md text-sm font-medium flex items-center ${

@@ -118,7 +118,6 @@ function App() {
           onShowStats={() => setShowStatistics(true)}
           onShowSettings={() => setShowSettings(true)}
           onGetHint={handleGetHint}
-          onShowInstructions={() => setShowInstructions(true)}
           isComplete={gameState.isComplete}
           theme={theme}
           t={t}
@@ -143,6 +142,19 @@ function App() {
 
         {showInstructions && (
           <Instructions onClose={handleCloseInstructions} theme={theme} t={t} />
+        )}
+
+        {!showInstructions && (
+          <div className="mb-4 flex justify-end">
+            <button
+              onClick={() => setShowInstructions(true)}
+              className={`text-sm underline ${
+                theme === 'dark' ? 'text-white/80 hover:text-white' : 'text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              {t.howToPlay}
+            </button>
+          </div>
         )}
 
         <div className={`backdrop-blur-sm rounded-xl p-6 shadow-2xl mb-6 ${
