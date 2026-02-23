@@ -1,6 +1,6 @@
 {
   "name": "conjinxto",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A modern TypeScript + Vite + React implementation of the Conjinxto word guessing game",
   "type": "module",
   "scripts": {
