@@ -125,23 +125,27 @@ function App() {
 
         {/* Restored progress notification */}
         {showRestoredNotice && (
-          <div className="mb-4 bg-green-500/90 text-white px-4 py-3 rounded-lg shadow-lg 
-                          flex items-center justify-between animate-fade-in">
-            <span className="flex items-center">
-              <span className="text-xl mr-2">💾</span>
-              <span>{t.progressSaved} {gameState.guesses.length} {gameState.guesses.length !== 1 ? t.attempts_plural : t.attempt}.</span>
-            </span>
-            <button 
-              onClick={() => setShowRestoredNotice(false)}
-              className="text-white/80 hover:text-white font-bold text-xl"
-            >
-              ×
-            </button>
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-2xl px-4">
+            <div className="bg-green-500/90 text-white px-4 py-3 rounded-lg shadow-lg 
+                            flex items-center justify-between animate-fade-in">
+              <span className="flex items-center">
+                <span className="text-xl mr-2">💾</span>
+                <span>{t.progressSaved} {gameState.guesses.length} {gameState.guesses.length !== 1 ? t.attempts_plural : t.attempt}.</span>
+              </span>
+              <button 
+                onClick={() => setShowRestoredNotice(false)}
+                className="text-white/80 hover:text-white font-bold text-xl"
+              >
+                ×
+              </button>
+            </div>
           </div>
         )}
 
         {showInstructions && (
-          <Instructions onClose={handleCloseInstructions} theme={theme} t={t} />
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-4">
+            <Instructions onClose={handleCloseInstructions} theme={theme} t={t} />
+          </div>
         )}
 
         {!showInstructions && (
