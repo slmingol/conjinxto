@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cold: #e81e80;
+  --color-warm: #ea7051;
+  --color-hot: #73f181;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+/* Default/Light theme */
+body {
+  background: linear-gradient(135deg, #faf5ff 0%, #fefbff 100%);
+}
+
+/* Dark theme */
+.dark body,
+:root.dark body {
+  background: #000000;
+}
+
+/* Light theme (explicit) */
+.light body,
+:root.light body {
+  background: linear-gradient(135deg, #faf5ff 0%, #fefbff 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
