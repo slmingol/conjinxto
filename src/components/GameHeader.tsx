@@ -32,6 +32,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
     <div className="flex justify-between items-start mb-6">
       <div>
         <h1 className={`text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
+        <p className={`text-xs mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>Word Similarity Game...</p>
       </div>
       <div className="flex flex-col items-end gap-2">
         <div className="flex space-x-2">
