@@ -417,6 +417,15 @@ function App() {
           />
         )}
       </div>
+
+      {/* Version display in lower right corner */}
+      <div className="fixed bottom-4 right-4">
+        <span className={`text-xs ${
+          theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
+        }`}>
+          v{__APP_VERSION__}
+        </span>
+      </div>
     </div>
   );
 }
