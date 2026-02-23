@@ -1,18 +1,18 @@
 version: '3.8'
 
 services:
-  contexto-app:
+  conjinxto-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: contexto-clone
+    container_name: conjinxto
     restart: unless-stopped
     ports:
-      - "3001:80"
+      - "3199:80"
     environment:
       - NODE_ENV=production
     networks:
-      - contexto-network
+      - conjinxto-network
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
@@ -20,8 +20,8 @@ services:
       retries: 3
       start_period: 40s
     labels:
-      - "com.contexto.description=Contexto Clone Game"
-      - "com.contexto.version=1.0.0"
+      - "com.conjinxto.description=Conjinxto Word Game"
+      - "com.conjinxto.version=1.0.0"
     logging:
       driver: "json-file"
       options:
@@ -29,6 +29,6 @@ services:
         max-file: "3"
 
 networks:
-  contexto-network:
+  conjinxto-network:
     driver: bridge
-    name: contexto-network
+    name: conjinxto-network
