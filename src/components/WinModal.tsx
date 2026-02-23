@@ -10,7 +10,7 @@ interface WinModalProps {
   t: Translations;
 }
 
-export const WinModal: React.FC<WinModalProps> = ({ targetWord, attempts, onNewGame, onClose, theme, t }) => {
+export const WinModal: React.FC<WinModalProps> = ({ targetWord, attempts, onClose, theme, t }) => {
   const isDark = theme === 'dark';
   
   return (

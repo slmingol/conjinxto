@@ -13,7 +13,7 @@ import { preloadDictionary } from './dictionaryLoader';
 import { loadSettings, GameSettings } from './settings';
 import { useTranslation } from './translations';
 import { capitalizeProperNoun } from './utils/properNouns';
-import { getClosestWords, ClosestWord } from './wordSimilarity';
+import { getClosestWords } from './wordSimilarity';
 
 const INSTRUCTIONS_DISMISSED_KEY = 'conjinxto-instructions-dismissed';
 const WIN_MODAL_SEEN_KEY = 'conjinxto-win-modal-seen';
