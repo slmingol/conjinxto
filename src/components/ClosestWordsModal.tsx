@@ -1,5 +1,5 @@
 import React from 'react';
-import { Guess } from '../types';
+import { Guess, GameMode } from '../types';
 import { ClosestWord } from '../wordSimilarity';
 
 interface ClosestWordsModalProps {
@@ -8,10 +8,21 @@ interface ClosestWordsModalProps {
   isLoading: boolean;
   onClose: () => void;
   theme: 'light' | 'dark';
+  targetWord: string;
+  gameMode: GameMode;
+  isComplete: boolean;
 }
 
-export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, closestWords, isLoading, onClose, theme }) => {
+export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, closestWords, isLoading, onClose, theme, targetWord, gameMode, isComplete }) => {
   const isDark = theme === 'dark';
+  
+  // Filter out target word unless:
+  // 1. Game is complete (they already know it)
+  // 2. It's an archive game (for learning/practice)
+  const shouldShowSolution = isComplete || gameMode === 'archive';
+  const filteredClosestWords = shouldShowSolution 
+    ? closestWords 
+    : closestWords.filter(w => w.word.toLowerCase() !== targetWord.toLowerCase());
   
   // Handle escape key to close modal
   React.useEffect(() => {
@@ -26,7 +37,7 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
   }, [onClose]);
   
   // If we have closest words from API, use those; otherwise fall back to just showing guesses
-  const displayWords = closestWords.length > 0 ? closestWords : 
+  const displayWords = filteredClosestWords.length > 0 ? filteredClosestWords : 
     [...guesses]
       .sort((a, b) => b.similarity - a.similarity)
       .map((guess, index) => ({

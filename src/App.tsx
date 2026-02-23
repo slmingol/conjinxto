@@ -414,6 +414,9 @@ function App() {
             isLoading={isLoadingClosestWords}
             onClose={() => setShowClosestWords(false)}
             theme={theme}
+            targetWord={gameState.targetWord}
+            gameMode={gameState.gameMode}
+            isComplete={gameState.isComplete}
           />
         )}
       </div>
