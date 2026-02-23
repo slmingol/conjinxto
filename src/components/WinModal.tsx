@@ -45,27 +45,33 @@ export const WinModal: React.FC<WinModalProps> = ({ targetWord, attempts, onNewG
           }`}>
             {t.youGuessedWord}
           </p>
-          <p className="text-3xl font-bold text-purple-600 mb-4 capitalize">
+          <p className="text-3xl font-bold text-purple-600 mb-4">
             {targetWord}
           </p>
-          <p className={isDark ? 'text-gray-300 mb-6' : 'text-gray-600 mb-6'}>
+          <p className={isDark ? 'text-gray-300 mb-4' : 'text-gray-600 mb-4'}>
             {t.itTookYou} <span className="font-semibold">{attempts}</span> {attempts !== 1 ? t.attempts_plural : t.attempt}
           </p>
+          <div className={`mb-6 p-4 rounded-lg ${
+            isDark ? 'bg-green-500/20 border border-green-500/50' : 'bg-green-100 border border-green-300'
+          }`}>
+            <p className={`text-sm font-semibold ${
+              isDark ? 'text-green-200' : 'text-green-800'
+            }`}>
+              ✅ {t.completedToday}
+            </p>
+            <p className={`text-xs mt-1 ${
+              isDark ? 'text-green-300' : 'text-green-700'
+            }`}>
+              {t.comeBackTomorrow}
+            </p>
+          </div>
           <div className="flex gap-3 justify-center">
             <button
               onClick={onClose}
-              className={`px-6 py-3 font-semibold rounded-lg transition-colors ${
-                isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-              }`}
-            >
-              {t.keepLooking}
-            </button>
-            <button
-              onClick={onNewGame}
               className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white 
                          font-semibold rounded-lg transition-colors shadow-lg"
             >
-              {t.playAgain}
+              {t.close}
             </button>
           </div>
         </div>

@@ -41,6 +41,8 @@ export interface Translations {
   attempts_plural: string;
   keepLooking: string;
   playAgain: string;
+  completedToday: string;
+  comeBackTomorrow: string;
   
   // Statistics
   statistics: string;
@@ -116,6 +118,8 @@ export const translations: Record<Language, Translations> = {
     attempts_plural: 'attempts',
     keepLooking: 'Keep Looking',
     playAgain: 'Play Again',
+    completedToday: "You've completed today's puzzle!",
+    comeBackTomorrow: 'Come back tomorrow for a new word.',
     
     // Statistics
     statistics: 'Statistics',
@@ -190,6 +194,8 @@ export const translations: Record<Language, Translations> = {
     attempts_plural: 'tentativas',
     keepLooking: 'Continue Procurando',
     playAgain: 'Jogar Novamente',
+    completedToday: 'Você completou o quebra-cabeça de hoje!',
+    comeBackTomorrow: 'Volte amanhã para uma nova palavra.',
     
     // Statistics
     statistics: 'Estatísticas',
@@ -264,6 +270,8 @@ export const translations: Record<Language, Translations> = {
     attempts_plural: 'intentos',
     keepLooking: 'Seguir Buscando',
     playAgain: 'Jugar de Nuevo',
+    completedToday: '¡Has completado el rompecabezas de hoy!',
+    comeBackTomorrow: 'Vuelve mañana para una nueva palabra.',
     
     // Statistics
     statistics: 'Estadísticas',

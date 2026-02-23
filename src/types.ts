@@ -11,6 +11,8 @@ export interface GameState {
   isComplete: boolean;
   attempts: number;
   hintsUsed: number;
+  gameNumber: number;
+  statsRecorded?: boolean; // Track if statistics have been recorded for this game
 }
 
 export type Language = 'english' | 'arabic' | 'russian';

@@ -1,3 +1,17 @@
+// Game start date (February 1, 2026)
+const GAME_START_DATE = new Date('2026-02-01');
+
+// Get current game number based on days since start
+export function getGameNumber(): number {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const start = new Date(GAME_START_DATE);
+  start.setHours(0, 0, 0, 0);
+  const diffTime = Math.abs(today.getTime() - start.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays + 1; // Start at game #1
+}
+
 // Common English nouns for the game
 export const englishWords = [
   // Animals
@@ -63,8 +77,7 @@ export function getRandomTargetWord(): string {
 
 // Get daily word (based on date)
 export function getDailyWord(): string {
-  const today = new Date();
-  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
-  const index = dayOfYear % targetWords.length;
+  const gameNumber = getGameNumber();
+  const index = (gameNumber - 1) % targetWords.length;
   return targetWords[index];
 }

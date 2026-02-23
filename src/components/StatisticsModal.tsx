@@ -16,6 +16,18 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ onClose, theme
     setStats(loadStatistics());
   }, []);
 
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
   if (!stats) return null;
 
   const avgAttempts = getAverageAttempts(stats);
@@ -128,11 +140,12 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ onClose, theme
 
           {/* No games message */}
           {stats.gamesPlayed === 0 && (
-            <div className={`text-center py-8 ${
-              isDark ? 'text-gray-400' : 'text-gray-500'
+            <div className={`text-center py-8 rounded-lg ${
+              isDark ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-600'
             }`}>
-              <p className="text-base">{t.noGamesYet}</p>
-              <p className="text-xs mt-2">{t.startPlaying}</p>
+              <div className="text-4xl mb-3">🎮</div>
+              <p className="text-lg font-semibold mb-1">{t.noGamesYet}</p>
+              <p className="text-sm">{t.startPlaying}</p>
             </div>
           )}
 

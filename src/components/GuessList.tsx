@@ -58,33 +58,49 @@ export const GuessList: React.FC<GuessListProps> = ({ guesses, sortBy = 'similar
         
         const isTopGuess = rank === 1;
 
+        // Calculate percentage for bar (0-100%)
+        const percentage = Math.round(guess.similarity * 100);
+        
         return (
           <div
             key={`${guess.word}-${index}`}
-            className={`rounded-lg p-3 flex items-center justify-between shadow-md 
-                       transition-all hover:shadow-lg ${isTopGuess ? 'ring-2 ring-green-400' : ''} ${
-              isDark ? 'bg-gray-800/95' : 'bg-white/95'
-            }`}
+            className={`rounded-lg p-3 shadow-md transition-all hover:shadow-lg ${
+              isTopGuess ? 'ring-2 ring-green-400' : ''
+            } ${isDark ? 'bg-gray-800/95' : 'bg-white/95'}`}
           >
-            <div className="flex items-center space-x-4 flex-1">
-              <div className={`${bgColor} text-white font-bold text-sm px-3 py-1 rounded-lg min-w-[50px] text-center shadow`}>
-                {rank}
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className={`font-semibold text-base capitalize ${
-                  isDark ? 'text-white' : 'text-gray-800'
-                }`}>
-                  {guess.word}
-                </span>
-                {guess.isHint && (
-                  <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded-full font-medium" title="This was a hint">
-                    💡 HINT
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center space-x-4 flex-1">
+                <div className={`${bgColor} text-white font-bold text-sm px-3 py-1 rounded-lg min-w-[50px] text-center shadow`}>
+                  {rank}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className={`font-semibold text-base ${
+                    isDark ? 'text-white' : 'text-gray-800'
+                  }`}>
+                    {guess.word}
                   </span>
-                )}
+                  {guess.isHint && (
+                    <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded-full font-medium" title="This was a hint">
+                      💡 HINT
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className={`text-sm font-semibold ${
+                isDark ? 'text-white/80' : 'text-gray-700'
+              }`}>
+                {percentage}%
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className={`w-3 h-3 rounded-full ${bgColor}`}></div>
+            
+            {/* Bar graph visualization */}
+            <div className={`w-full h-2 rounded-full overflow-hidden ${
+              isDark ? 'bg-gray-700' : 'bg-gray-200'
+            }`}>
+              <div
+                className={`h-full ${bgColor} transition-all duration-300 ease-out`}
+                style={{ width: `${percentage}%` }}
+              ></div>
             </div>
           </div>
         );

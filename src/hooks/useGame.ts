@@ -1,10 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Guess, GameState } from '../types';
 import { calculateSimilarity, getHintWord } from '../wordSimilarity';
-import { getDailyWord } from '../wordData';
+import { getDailyWord, getGameNumber } from '../wordData';
 import { isWordInDictionary } from '../dictionaryLoader';
 import { recordWin } from '../statistics';
 import { HintDifficulty } from '../settings';
+import { capitalizeProperNoun } from '../utils/properNouns';
 
 const STORAGE_KEY = 'conjinxto-game-state';
 const STORAGE_DATE_KEY = 'conjinxto-game-date';
@@ -19,32 +20,41 @@ function loadGameState(): GameState {
     // If we have saved state and it's from today, restore it
     if (savedState && savedDate === today) {
       const parsed = JSON.parse(savedState) as GameState;
-      // Ensure attempts and hintsUsed have default values if missing
+      const currentGameNumber = getGameNumber();
+      // Ensure attempts, hintsUsed, gameNumber, and statsRecorded have default values if missing
       return {
         ...parsed,
         attempts: parsed.attempts ?? 0,
         hintsUsed: parsed.hintsUsed ?? 0,
+        gameNumber: parsed.gameNumber ?? currentGameNumber,
+        statsRecorded: parsed.statsRecorded ?? false,
       };
     }
     
     // Otherwise, start a new game with today's word
     const targetWord = getDailyWord();
+    const gameNumber = getGameNumber();
     return {
       guesses: [],
       targetWord,
       isComplete: false,
       attempts: 0,
       hintsUsed: 0,
+      gameNumber,
+      statsRecorded: false,
     };
   } catch (error) {
     console.error('Failed to load game state:', error);
     const targetWord = getDailyWord();
+    const gameNumber = getGameNumber();
     return {
       guesses: [],
       targetWord,
       isComplete: false,
       attempts: 0,
       hintsUsed: 0,
+      gameNumber,
+      statsRecorded: false,
     };
   }
 }
@@ -71,18 +81,21 @@ export function useGame() {
     saveGameState(gameState);
   }, [gameState]);
 
-  // Record statistics when a game is won
+  // Record statistics when a game is won (only once)
   useEffect(() => {
-    if (gameState.isComplete && gameState.guesses.length > 0) {
+    if (gameState.isComplete && gameState.guesses.length > 0 && !gameState.statsRecorded) {
       const hasWon = gameState.guesses.some(g => g.similarity >= 0.9999);
       if (hasWon) {
         recordWin(gameState.attempts);
+        // Mark stats as recorded
+        setGameState(prev => ({ ...prev, statsRecorded: true }));
       }
     }
-  }, [gameState.isComplete, gameState.guesses, gameState.attempts]);
+  }, [gameState.isComplete, gameState.guesses, gameState.attempts, gameState.statsRecorded]);
 
   const makeGuess = useCallback(async (word: string) => {
-    const normalizedWord = word.toLowerCase().trim();
+    const trimmedWord = word.trim();
+    const normalizedWord = trimmedWord.toLowerCase();
 
     if (!normalizedWord) {
       setError('Please enter a word');
@@ -92,7 +105,7 @@ export function useGame() {
     // Clear input immediately for better UX
     setInputWord('');
 
-    // Check if already guessed
+    // Check if already guessed (case-insensitive)
     if (gameState.guesses.some(g => g.word.toLowerCase() === normalizedWord)) {
       setError('You already guessed this word');
       return;
@@ -120,7 +133,7 @@ export function useGame() {
       const similarity = await calculateSimilarity(normalizedWord, gameState.targetWord);
       
       const guess: Guess = {
-        word: normalizedWord,
+        word: capitalizeProperNoun(trimmedWord),
         similarity,
       };
 
@@ -150,12 +163,15 @@ export function useGame() {
 
   const resetGame = useCallback(() => {
     const targetWord = getDailyWord();
+    const gameNumber = getGameNumber();
     const newState = {
       guesses: [],
       targetWord,
       isComplete: false,
       attempts: 0,
       hintsUsed: 0,
+      gameNumber,
+      statsRecorded: false,
     };
     setGameState(newState);
     setInputWord('');
@@ -224,7 +240,7 @@ export function useGame() {
       const similarity = await calculateSimilarity(hintWord, gameState.targetWord);
       
       const hintGuess: Guess = {
-        word: hintWord,
+        word: capitalizeProperNoun(hintWord),
         similarity,
         isHint: true,
       };

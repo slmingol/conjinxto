@@ -26,6 +26,18 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, onSetting
   const [settings, setSettings] = useState<GameSettings>(loadSettings());
   const isDark = theme === 'dark';
 
+  // Handle escape key to close modal
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
   const updateSetting = <K extends keyof GameSettings>(key: K, value: GameSettings[K]) => {
     const newSettings = { ...settings, [key]: value };
     setSettings(newSettings);
@@ -201,6 +213,47 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, onSetting
                   }`}>{sortByLabels[sortBy]}</span>
                 </label>
               ))}
+            </div>
+          </div>
+
+          {/* Danger Zone */}
+          <div className="mt-6 pt-4 border-t border-gray-300">
+            <h3 className={`text-xs font-semibold mb-2 text-red-600`}>
+              ⚠️ Danger Zone
+            </h3>
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  if (window.confirm('Clear current game progress? This will reset your active game but keep your statistics.')) {
+                    localStorage.removeItem('conjinxto-game-state');
+                    localStorage.removeItem('conjinxto-game-date');
+                    localStorage.removeItem('conjinxto-win-modal-seen');
+                    window.location.reload();
+                  }
+                }}
+                className={`w-full px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center justify-center ${
+                  isDark
+                    ? 'bg-red-900/30 hover:bg-red-900/50 text-red-400 border border-red-800'
+                    : 'bg-red-50 hover:bg-red-100 text-red-700 border border-red-300'
+                }`}
+              >
+                <span className="-translate-y-0.5">🗑️ Clear Game Progress</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (window.confirm('Reset ALL statistics? This will permanently delete your game history and cannot be undone!')) {
+                    localStorage.removeItem('conjinxto-statistics');
+                    window.location.reload();
+                  }
+                }}
+                className={`w-full px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center justify-center ${
+                  isDark
+                    ? 'bg-red-900/50 hover:bg-red-900/70 text-red-300 border-2 border-red-700'
+                    : 'bg-red-100 hover:bg-red-200 text-red-800 border-2 border-red-400'
+                }`}
+              >
+                <span className="-translate-y-0.5">⚠️ Reset Statistics</span>
+              </button>
             </div>
           </div>
 

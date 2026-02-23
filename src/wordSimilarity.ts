@@ -251,3 +251,44 @@ export async function getHintWord(targetWord: string, targetRank: number): Promi
     return null;
   }
 }
+
+/**
+ * Get the top 500 closest words to the target word from Datamuse API
+ * Returns words with their calculated similarity scores
+ */
+export interface ClosestWord {
+  word: string;
+  rank: number;
+  similarity: number;
+  isGuessed: boolean;
+}
+
+export async function getClosestWords(targetWord: string, guessedWords: Set<string>): Promise<ClosestWord[]> {
+  try {
+    const similarWords = await fetchSimilarWords(targetWord);
+    
+    if (similarWords.length === 0) {
+      return [];
+    }
+    
+    // Take top 500 words and calculate their similarity to the target
+    const top500 = similarWords.slice(0, 500);
+    
+    const closestWords: ClosestWord[] = await Promise.all(
+      top500.map(async (word, index) => {
+        const similarity = await calculateSimilarity(word.word, targetWord);
+        return {
+          word: word.word,
+          rank: index + 1,
+          similarity,
+          isGuessed: guessedWords.has(word.word.toLowerCase()),
+        };
+      })
+    );
+    
+    return closestWords;
+  } catch (error) {
+    console.error('Failed to get closest words:', error);
+    return [];
+  }
+}
