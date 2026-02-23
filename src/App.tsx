@@ -123,10 +123,11 @@ function App() {
           t={t}
         />
 
-        {/* Restored progress notification */}
-        {showRestoredNotice && (
-          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-2xl px-4">
-            <div className="bg-green-500/90 text-white px-4 py-3 rounded-lg shadow-lg 
+        {/* Reserved space for notifications and instructions to prevent layout shift */}
+        <div className="min-h-[400px] mb-4">
+          {/* Restored progress notification */}
+          {showRestoredNotice && (
+            <div className="mb-4 bg-green-500/90 text-white px-4 py-3 rounded-lg shadow-lg 
                             flex items-center justify-between animate-fade-in">
               <span className="flex items-center">
                 <span className="text-xl mr-2">💾</span>
@@ -139,14 +140,12 @@ function App() {
                 ×
               </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {showInstructions && (
-          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-4">
+          {showInstructions && (
             <Instructions onClose={handleCloseInstructions} theme={theme} t={t} />
-          </div>
-        )}
+          )}
+        </div>
 
         {!showInstructions && (
           <div className="mb-4 flex justify-end">

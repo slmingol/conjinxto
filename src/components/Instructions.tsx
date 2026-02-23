@@ -11,7 +11,7 @@ export const Instructions: React.FC<InstructionsProps> = ({ onClose, theme, t })
   const isDark = theme === 'dark';
   
   return (
-    <div className={`rounded-lg p-6 shadow-xl ${
+    <div className={`rounded-lg p-6 shadow-xl mb-4 ${
       isDark ? 'bg-gray-800/95' : 'bg-white/95'
     }`}>
       <div className="flex justify-between items-start mb-4">
