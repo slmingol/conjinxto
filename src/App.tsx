@@ -124,7 +124,7 @@ function App() {
         />
 
         {/* Reserved space for notifications and instructions to prevent layout shift */}
-        <div className="min-h-[400px] mb-4">
+        <div className="min-h-[50px] mb-4">
           {/* Restored progress notification */}
           {showRestoredNotice && (
             <div className="mb-4 bg-green-500/90 text-white px-4 py-3 rounded-lg shadow-lg 
