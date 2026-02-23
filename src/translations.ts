@@ -77,7 +77,7 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   en: {
     // Header
-    title: 'Conjixto',
+    title: 'Conjinxto',
     attempts: 'Attempts',
     hints: 'Hints',
     hint: 'Hint',
@@ -151,7 +151,7 @@ export const translations: Record<Language, Translations> = {
   
   pt: {
     // Header
-    title: 'Conjixto',
+    title: 'Conjinxto',
     attempts: 'Tentativas',
     hints: 'Dicas',
     hint: 'Dica',
@@ -225,7 +225,7 @@ export const translations: Record<Language, Translations> = {
   
   es: {
     // Header
-    title: 'Conjixto',
+    title: 'Conjinxto',
     attempts: 'Intentos',
     hints: 'Pistas',
     hint: 'Pista',

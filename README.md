@@ -1,10 +1,10 @@
-# Conjixto
+# Conjinxto
 
 A modern TypeScript + Vite + React implementation of the Contexto-style word guessing game.
 
 ## 🎮 About
 
-Conjixto is a word-guessing game where players try to find a secret word by making guesses. Each guess is ranked based on how semantically similar it is to the target word using an AI algorithm. The secret word is always rank #1.
+Conjinxto is a word-guessing game where players try to find a secret word by making guesses. Each guess is ranked based on how semantically similar it is to the target word using an AI algorithm. The secret word is always rank #1.
 
 ## ✨ Features
 
@@ -139,13 +139,13 @@ This will:
 
 ```bash
 # Build the image
-docker build -t conjixto .
+docker build -t conjinxto .
 
 # Run the container
-docker run -d -p 3001:80 --name conjixto conjixto
+docker run -d -p 3001:80 --name conjinxto conjinxto
 
 # Stop and remove
-docker stop conjixto && docker rm conjixto
+docker stop conjinxto && docker rm conjinxto
 ```
 
 > 📘 **For detailed Docker documentation, troubleshooting, and deployment guides, see [DOCKER.md](DOCKER.md)**
@@ -190,7 +190,7 @@ Track your performance with detailed statistics:
 ## 🏗 Project Structure
 
 ```
-conjixto/
+conjinxto/
 ├── src/
 │   ├── components/          # React components
 │   │   ├── GameHeader.tsx   # Header with controls and stats
@@ -264,21 +264,21 @@ Lazy-loads 370k word dictionary:
 
 The game uses browser localStorage to save:
 
-**Game State** (`conjixto-game-state`):
+**Game State** (`conjinxto-game-state`):
 - All guesses with similarity scores
 - Current target word
 - Number of attempts
 - Hints used count
 - Game completion status
 
-**Statistics** (`conjixto-statistics`):
+**Statistics** (`conjinxto-statistics`):
 - Games played and won
 - Current and best streaks
 - Best score (fewest attempts)
 - Attempts distribution
 - Last play date
 
-**Settings** (`conjixto-settings`):
+**Settings** (`conjinxto-settings`):
 - Language preference
 - Theme selection
 - Hint difficulty

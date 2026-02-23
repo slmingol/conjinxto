@@ -12,16 +12,16 @@ import { preloadDictionary } from './dictionaryLoader';
 import { loadSettings, GameSettings } from './settings';
 import { useTranslation } from './translations';
 
-const INSTRUCTIONS_DISMISSED_KEY = 'conjixto-instructions-dismissed';
+const INSTRUCTIONS_DISMISSED_KEY = 'conjinxto-instructions-dismissed';
 
-// Migrate old Contexto localStorage keys to new Conjixto keys (one-time migration)
+// Migrate old Contexto localStorage keys to new Conjinxto keys (one-time migration)
 function migrateLocalStorage() {
   const migrations = [
-    { old: 'contexto-game-state', new: 'conjixto-game-state' },
-    { old: 'contexto-game-date', new: 'conjixto-game-date' },
-    { old: 'contexto-statistics', new: 'conjixto-statistics' },
-    { old: 'contexto-settings', new: 'conjixto-settings' },
-    { old: 'contexto-instructions-dismissed', new: 'conjixto-instructions-dismissed' },
+    { old: 'contexto-game-state', new: 'conjinxto-game-state' },
+    { old: 'contexto-game-date', new: 'conjinxto-game-date' },
+    { old: 'contexto-statistics', new: 'conjinxto-statistics' },
+    { old: 'contexto-settings', new: 'conjinxto-settings' },
+    { old: 'contexto-instructions-dismissed', new: 'conjinxto-instructions-dismissed' },
   ];
 
   migrations.forEach(({ old, new: newKey }) => {

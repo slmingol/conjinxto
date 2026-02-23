@@ -6,8 +6,8 @@ import { isWordInDictionary } from '../dictionaryLoader';
 import { recordWin } from '../statistics';
 import { HintDifficulty } from '../settings';
 
-const STORAGE_KEY = 'conjixto-game-state';
-const STORAGE_DATE_KEY = 'conjixto-game-date';
+const STORAGE_KEY = 'conjinxto-game-state';
+const STORAGE_DATE_KEY = 'conjinxto-game-date';
 
 // Load game state from localStorage
 function loadGameState(): GameState {

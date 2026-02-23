@@ -1,5 +1,5 @@
 /**
- * Settings management for Conjixto game
+ * Settings management for Conjinxto game
  */
 
 export type Language = 'en' | 'pt' | 'es';
@@ -14,7 +14,7 @@ export interface GameSettings {
   sortBy: SortBy;
 }
 
-const SETTINGS_KEY = 'conjixto-settings';
+const SETTINGS_KEY = 'conjinxto-settings';
 
 // Default settings
 function createDefaultSettings(): GameSettings {

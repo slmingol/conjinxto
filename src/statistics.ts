@@ -1,5 +1,5 @@
 /**
- * Statistics tracking for Conjixto game
+ * Statistics tracking for Conjinxto game
  */
 
 export interface GameStatistics {
@@ -13,7 +13,7 @@ export interface GameStatistics {
   lastPlayedDate: string | null;
 }
 
-const STATS_KEY = 'conjixto-statistics';
+const STATS_KEY = 'conjinxto-statistics';
 
 // Initialize empty statistics
 function createEmptyStats(): GameStatistics {

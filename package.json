@@ -1,7 +1,7 @@
 {
-  "name": "conjixto",
+  "name": "conjinxto",
   "version": "1.0.0",
-  "description": "A modern TypeScript + Vite + React implementation of the Conjixto word guessing game",
+  "description": "A modern TypeScript + Vite + React implementation of the Conjinxto word guessing game",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
     "lint": "tsc --noEmit"
   },
   "keywords": [
-    "conjixto",
+    "conjinxto",
     "word-game",
     "react",
     "typescript",
