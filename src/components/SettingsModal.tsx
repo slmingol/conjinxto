@@ -257,8 +257,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, onSetting
             </div>
           </div>
 
+          {/* Version */}
+          <div className="text-center mt-4 mb-2">
+            <span className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+              v{__APP_VERSION__}
+            </span>
+          </div>
+
           {/* Close button */}
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-2">
             <button
               onClick={onClose}
               className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white 
