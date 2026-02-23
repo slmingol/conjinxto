@@ -51,6 +51,7 @@ function App() {
     giveUp,
     resetGame,
     getHint,
+    playArchiveGame,
   } = useGame();
 
   const [showInstructions, setShowInstructions] = useState(() => {
@@ -204,15 +205,33 @@ function App() {
           attempts={gameState.attempts}
           hintsUsed={gameState.hintsUsed}
           gameNumber={gameState.gameNumber}
+          gameMode={gameState.gameMode}
           onGiveUp={handleGiveUp}
           onReset={handleResetGame}
           onShowStats={() => setShowStatistics(true)}
           onShowSettings={() => setShowSettings(true)}
           onGetHint={handleGetHint}
+          onPlayArchive={playArchiveGame}
           isComplete={gameState.isComplete}
           theme={theme}
           t={t}
         />
+
+        {/* Archive Mode Banner */}
+        {gameState.gameMode === 'archive' && (
+          <div className={`mb-4 px-4 py-3 rounded-lg shadow-lg border-2 ${
+            theme === 'dark' 
+              ? 'bg-orange-900/30 border-orange-600 text-orange-200' 
+              : 'bg-orange-50 border-orange-400 text-orange-800'
+          }`}>
+            <div className="flex items-center justify-center">
+              <span className="text-xl mr-2">🕰️</span>
+              <span className="font-semibold">
+                Archive Mode: Playing Game #{gameState.gameNumber} - This game won't affect your statistics
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Reserved space for notifications and instructions to prevent layout shift */}
         <div className="min-h-[68px] mb-4">

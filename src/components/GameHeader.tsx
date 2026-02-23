@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Translations } from '../translations';
+import { GameMode } from '../types';
 
 interface GameHeaderProps {
   attempts: number;
   hintsUsed: number;
   gameNumber: number;
+  gameMode: GameMode;
   onGiveUp: () => void;
   onReset: () => void;
   onShowStats: () => void;
   onShowSettings: () => void;
   onGetHint: () => void;
+  onPlayArchive: (gameNumber: number) => void;
   isComplete: boolean;
   theme: 'light' | 'dark';
   t: Translations;
@@ -19,17 +22,21 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   attempts,
   hintsUsed,
   gameNumber,
+  gameMode,
   onGiveUp,
   onReset,
   onShowStats,
   onShowSettings,
   onGetHint,
+  onPlayArchive,
   isComplete,
   theme,
   t,
 }) => {
   const isDark = theme === 'dark';
   const [timeUntilNext, setTimeUntilNext] = useState('');
+  const [showArchiveSelector, setShowArchiveSelector] = useState(false);
+  const [archiveNumber, setArchiveNumber] = useState('');
   
   // Calculate time remaining until next game (midnight)
   useEffect(() => {
@@ -60,6 +67,15 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
     month: 'long',
     day: 'numeric'
   });
+  
+  const handlePlayArchive = () => {
+    const num = parseInt(archiveNumber, 10);
+    if (num >= 1) {
+      onPlayArchive(num);
+      setShowArchiveSelector(false);
+      setArchiveNumber('');
+    }
+  };
   
   return (
     <div className="flex justify-between items-start mb-6">
@@ -118,9 +134,14 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
         </div>
         <div className="flex flex-col items-end gap-1">
           <div className="flex items-center gap-4">
-            <p className={`text-base ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
+            <button
+              onClick={() => setShowArchiveSelector(true)}
+              className={`text-base hover:underline cursor-pointer ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
+              title="Click to play past games"
+            >
               Game: <span className="font-bold">#{gameNumber}</span>
-            </p>
+              {gameMode === 'archive' && <span className="ml-1 text-xs">(Archive)</span>}
+            </button>
             <p className={`text-base ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
               {t.attempts}: <span className="font-bold">{attempts}</span>
             </p>
@@ -138,6 +159,69 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
           </div>
         </div>
       </div>
+      
+      {/* Archive Game Selector Modal */}
+      {showArchiveSelector && (
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setShowArchiveSelector(false)}
+        >
+          <div 
+            className={`rounded-2xl p-6 max-w-md mx-4 shadow-2xl ${
+              isDark ? 'bg-gray-800' : 'bg-white'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className={`text-xl font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-800'
+            }`}>
+              🕰️ Play Archive Game
+            </h2>
+            <p className={`text-sm mb-4 ${
+              isDark ? 'text-gray-300' : 'text-gray-600'
+            }`}>
+              Enter a game number to play past puzzles. Note: archive games don't count toward your statistics.
+            </p>
+            <div className="flex gap-2 mb-4">
+              <input
+                type="number"
+                min="1"
+                value={archiveNumber}
+                onChange={(e) => setArchiveNumber(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handlePlayArchive()}
+                placeholder="Game #"
+                className={`flex-1 px-4 py-2 rounded-lg border-2 ${
+                  isDark 
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                }`}
+                autoFocus
+              />
+              <button
+                onClick={handlePlayArchive}
+                disabled={!archiveNumber || parseInt(archiveNumber, 10) < 1}
+                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white 
+                           font-semibold rounded-lg transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Play
+              </button>
+            </div>
+            <button
+              onClick={() => {
+                setShowArchiveSelector(false);
+                setArchiveNumber('');
+              }}
+              className={`w-full px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                isDark
+                  ? 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                  : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+              }`}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

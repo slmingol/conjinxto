@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Guess, GameState } from '../types';
 import { calculateSimilarity, getHintWord } from '../wordSimilarity';
-import { getDailyWord, getGameNumber } from '../wordData';
+import { getDailyWord, getGameNumber, getWordByGameNumber } from '../wordData';
 import { isWordInDictionary } from '../dictionaryLoader';
 import { recordWin } from '../statistics';
 import { HintDifficulty } from '../settings';
@@ -21,13 +21,14 @@ function loadGameState(): GameState {
     if (savedState && savedDate === today) {
       const parsed = JSON.parse(savedState) as GameState;
       const currentGameNumber = getGameNumber();
-      // Ensure attempts, hintsUsed, gameNumber, and statsRecorded have default values if missing
+      // Ensure attempts, hintsUsed, gameNumber, statsRecorded, and gameMode have default values if missing
       return {
         ...parsed,
         attempts: parsed.attempts ?? 0,
         hintsUsed: parsed.hintsUsed ?? 0,
         gameNumber: parsed.gameNumber ?? currentGameNumber,
         statsRecorded: parsed.statsRecorded ?? false,
+        gameMode: parsed.gameMode ?? 'daily',
       };
     }
     
@@ -42,6 +43,7 @@ function loadGameState(): GameState {
       hintsUsed: 0,
       gameNumber,
       statsRecorded: false,
+      gameMode: 'daily',
     };
   } catch (error) {
     console.error('Failed to load game state:', error);
@@ -55,6 +57,7 @@ function loadGameState(): GameState {
       hintsUsed: 0,
       gameNumber,
       statsRecorded: false,
+      gameMode: 'daily',
     };
   }
 }
@@ -81,9 +84,9 @@ export function useGame() {
     saveGameState(gameState);
   }, [gameState]);
 
-  // Record statistics when a game is won (only once)
+  // Record statistics when a game is won (only once, and only for daily games)
   useEffect(() => {
-    if (gameState.isComplete && gameState.guesses.length > 0 && !gameState.statsRecorded) {
+    if (gameState.isComplete && gameState.guesses.length > 0 && !gameState.statsRecorded && gameState.gameMode === 'daily') {
       const hasWon = gameState.guesses.some(g => g.similarity >= 0.9999);
       if (hasWon) {
         recordWin(gameState.attempts);
@@ -91,7 +94,7 @@ export function useGame() {
         setGameState(prev => ({ ...prev, statsRecorded: true }));
       }
     }
-  }, [gameState.isComplete, gameState.guesses, gameState.attempts, gameState.statsRecorded]);
+  }, [gameState.isComplete, gameState.guesses, gameState.attempts, gameState.statsRecorded, gameState.gameMode]);
 
   const makeGuess = useCallback(async (word: string) => {
     const trimmedWord = word.trim();
@@ -172,6 +175,7 @@ export function useGame() {
       hintsUsed: 0,
       gameNumber,
       statsRecorded: false,
+      gameMode: 'daily' as const,
     };
     setGameState(newState);
     setInputWord('');
@@ -262,6 +266,26 @@ export function useGame() {
     }
   }, [gameState]);
 
+  const playArchiveGame = useCallback((archiveGameNumber: number) => {
+    const targetWord = getWordByGameNumber(archiveGameNumber);
+    const newState: GameState = {
+      guesses: [],
+      targetWord,
+      isComplete: false,
+      attempts: 0,
+      hintsUsed: 0,
+      gameNumber: archiveGameNumber,
+      statsRecorded: false,
+      gameMode: 'archive',
+    };
+    setGameState(newState);
+    setInputWord('');
+    setError(null);
+    // Clear localStorage when switching to archive mode
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_DATE_KEY);
+  }, []);
+
   return {
     gameState,
     inputWord,
@@ -273,5 +297,6 @@ export function useGame() {
     giveUp,
     resetGame,
     getHint,
+    playArchiveGame,
   };
 }

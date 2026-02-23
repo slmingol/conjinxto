@@ -81,3 +81,12 @@ export function getDailyWord(): string {
   const index = (gameNumber - 1) % targetWords.length;
   return targetWords[index];
 }
+
+// Get word for a specific game number
+export function getWordByGameNumber(gameNumber: number): string {
+  if (gameNumber < 1) {
+    throw new Error('Game number must be at least 1');
+  }
+  const index = (gameNumber - 1) % targetWords.length;
+  return targetWords[index];
+}
