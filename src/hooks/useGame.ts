@@ -225,17 +225,13 @@ export function useGame() {
         }
       }
 
-      const hintWord = await getHintWord(gameState.targetWord, targetRank);
+      // Get set of already guessed words
+      const guessedWords = new Set(gameState.guesses.map(g => g.word.toLowerCase()));
+      
+      const hintWord = await getHintWord(gameState.targetWord, targetRank, guessedWords);
       
       if (!hintWord) {
-        setError('Failed to get hint. Please try again.');
-        setIsLoading(false);
-        return;
-      }
-
-      // Check if hint word was already guessed
-      if (gameState.guesses.some(g => g.word.toLowerCase() === hintWord.toLowerCase())) {
-        setError(`You already guessed "${hintWord}"`);
+        setError('No more hints available. Try a different difficulty or keep guessing!');
         setIsLoading(false);
         return;
       }

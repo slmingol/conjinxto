@@ -230,8 +230,9 @@ export function getSimilarityColor(similarity: number): string {
 
 /**
  * Get a hint word at a specific rank for the target word
+ * Skips already guessed words
  */
-export async function getHintWord(targetWord: string, targetRank: number): Promise<string | null> {
+export async function getHintWord(targetWord: string, targetRank: number, guessedWords: Set<string>): Promise<string | null> {
   try {
     const similarWords = await fetchSimilarWords(targetWord);
     
@@ -239,11 +240,21 @@ export async function getHintWord(targetWord: string, targetRank: number): Promi
       return null;
     }
     
-    // Clamp targetRank to valid range
-    const clampedRank = Math.max(1, Math.min(targetRank, similarWords.length));
+    // Filter out already guessed words and the target word itself
+    const availableWords = similarWords.filter(w => 
+      !guessedWords.has(w.word.toLowerCase()) && 
+      w.word.toLowerCase() !== targetWord.toLowerCase()
+    );
+    
+    if (availableWords.length === 0) {
+      return null;
+    }
+    
+    // Clamp targetRank to valid range of available words
+    const clampedRank = Math.max(1, Math.min(targetRank, availableWords.length));
     
     // Get word at that rank (rank is 1-based, array is 0-based)
-    const hintWord = similarWords[clampedRank - 1];
+    const hintWord = availableWords[clampedRank - 1];
     
     return hintWord?.word || null;
   } catch (error) {
