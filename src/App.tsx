@@ -85,7 +85,7 @@ function App() {
   useEffect(() => {
     if (gameState.guesses.length > 0) {
       setShowRestoredNotice(true);
-      const timer = setTimeout(() => setShowRestoredNotice(false), 3125);
+      const timer = setTimeout(() => setShowRestoredNotice(false), 5000);
       return () => clearTimeout(timer);
     }
   }, []); // Only run on mount
