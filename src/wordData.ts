@@ -8,7 +8,7 @@ export function getGameNumber(): number {
   const start = new Date(GAME_START_DATE);
   start.setHours(0, 0, 0, 0);
   const diffTime = Math.abs(today.getTime() - start.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   return diffDays + 1; // Start at game #1
 }
 
