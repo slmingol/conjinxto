@@ -208,7 +208,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
                 );
               }
               
-              const totalGames = currentGameNumber - 1;
+              const totalGames = currentGameNumber;
               const startIndex = (currentPage - 1) * gamesPerPage;
               const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
               
@@ -256,7 +256,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
             {/* Pagination controls */}
             {(() => {
               const currentGameNumber = getGameNumber();
-              const totalGames = currentGameNumber - 1;
+              const totalGames = currentGameNumber;
               const totalPages = Math.ceil(totalGames / gamesPerPage);
               
               if (totalPages <= 1) return null;
