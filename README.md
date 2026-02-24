@@ -1,9 +1,5 @@
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="src/assets/conjinxto_logo_dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="src/assets/conjinxto_logo_light.png">
-    <img src="src/assets/conjinxto_logo_light.png" alt="Conjinxto Logo" width="200"/>
-  </picture>
+  <img src="src/assets/conjinxto_logo.png?v=5" alt="Conjinxto Logo" width="200"/>
 </div>
 
 # Conjinxto
