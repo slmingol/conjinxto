@@ -38,6 +38,8 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   const [timeUntilNext, setTimeUntilNext] = useState('');
   const [showArchiveSelector, setShowArchiveSelector] = useState(false);
   const [archiveNumber, setArchiveNumber] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const gamesPerPage = 30;
   
   // Calculate time remaining until next game (midnight)
   useEffect(() => {
@@ -139,7 +141,10 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
         <div className="flex flex-col items-end gap-1">
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setShowArchiveSelector(true)}
+              onClick={() => {
+                setShowArchiveSelector(true);
+                setCurrentPage(1);
+              }}
               className={`text-base hover:underline cursor-pointer ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
               title="Click to play past games"
             >
@@ -168,7 +173,10 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
       {showArchiveSelector && (
         <div 
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-          onClick={() => setShowArchiveSelector(false)}
+          onClick={() => {
+            setShowArchiveSelector(false);
+            setCurrentPage(1);
+          }}
         >
           <div 
             className={`rounded-2xl p-6 max-w-3xl w-full max-h-[80vh] overflow-y-auto mx-4 shadow-2xl ${
@@ -189,33 +197,81 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
             
             {/* Grid of past games */}
             <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 mb-4">
-              {Array.from({ length: gameNumber - 1 }, (_, i) => {
-                const num = gameNumber - 1 - i; // Reverse order (newest first)
-                const gameDate = new Date('2026-02-01');
-                gameDate.setDate(gameDate.getDate() + num - 1);
-                const dateStr = gameDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+              {(() => {
+                const totalGames = gameNumber - 1;
+                const totalPages = Math.ceil(totalGames / gamesPerPage);
+                const startIndex = (currentPage - 1) * gamesPerPage;
+                const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
                 
-                return (
+                return Array.from({ length: endIndex - startIndex }, (_, i) => {
+                  const num = totalGames - (startIndex + i); // Reverse order (newest first)
+                  const gameDate = new Date('2026-01-31');
+                  gameDate.setDate(gameDate.getDate() + num - 1);
+                  const dateStr = gameDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                  
+                  return (
+                    <button
+                      key={num}
+                      onClick={() => {
+                        onPlayArchive(num);
+                        setShowArchiveSelector(false);
+                        setArchiveNumber('');
+                        setCurrentPage(1);
+                      }}
+                      className={`p-3 rounded-lg font-semibold text-sm transition-all hover:scale-105 ${
+                        isDark
+                          ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
+                          : 'bg-purple-100 hover:bg-purple-200 text-purple-900'
+                      }`}
+                      title={dateStr}
+                    >
+                      <div className="text-base">#{num}</div>
+                      <div className="text-[10px] opacity-75">{dateStr}</div>
+                    </button>
+                  );
+                });
+              })()}
+            </div>
+            
+            {/* Pagination controls */}
+            {(() => {
+              const totalGames = gameNumber - 1;
+              const totalPages = Math.ceil(totalGames / gamesPerPage);
+              
+              if (totalPages <= 1) return null;
+              
+              return (
+                <div className="flex items-center justify-between mb-4">
                   <button
-                    key={num}
-                    onClick={() => {
-                      onPlayArchive(num);
-                      setShowArchiveSelector(false);
-                      setArchiveNumber('');
-                    }}
-                    className={`p-3 rounded-lg font-semibold text-sm transition-all hover:scale-105 ${
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
                       isDark
                         ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
-                        : 'bg-purple-100 hover:bg-purple-200 text-purple-900'
+                        : 'bg-purple-200 hover:bg-purple-300 text-purple-900'
                     }`}
-                    title={dateStr}
                   >
-                    <div className="text-base">#{num}</div>
-                    <div className="text-[10px] opacity-75">{dateStr}</div>
+                    ← Previous
                   </button>
-                );
-              })}
-            </div>
+                  
+                  <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Page {currentPage} of {totalPages}
+                  </div>
+                  
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                      isDark
+                        ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
+                        : 'bg-purple-200 hover:bg-purple-300 text-purple-900'
+                    }`}
+                  >
+                    Next →
+                  </button>
+                </div>
+              );
+            })()}
             
             {/* Manual entry option */}
             <div className={`border-t pt-4 mt-4 ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
@@ -251,6 +307,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
               onClick={() => {
                 setShowArchiveSelector(false);
                 setArchiveNumber('');
+                setCurrentPage(1);
               }}
               className={`w-full px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                 isDark

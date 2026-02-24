@@ -1,5 +1,5 @@
-// Game start date (February 1, 2026)
-const GAME_START_DATE = new Date('2026-02-01');
+// Game start date (January 31, 2026)
+const GAME_START_DATE = new Date('2026-01-31');
 
 // Get current game number based on days since start
 export function getGameNumber(): number {
