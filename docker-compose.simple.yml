@@ -1,6 +1,6 @@
 services:
   conjinxto:
-    image: ghcr.io/slmingol/conjinxto:latest
+    image: nexus.bub.lan:8083/slmingol/conjinxto:latest
     container_name: conjinxto
     restart: unless-stopped
     ports:
