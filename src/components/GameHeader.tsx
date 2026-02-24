@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Translations } from '../translations';
 import { GameMode } from '../types';
+import { getGameNumber } from '../wordData';
 import logoImage from '../assets/conjinxto_logo_solo.png';
 
 interface GameHeaderProps {
@@ -196,23 +197,29 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
             </p>
             
             {/* Grid of past games */}
-            {gameNumber === 1 ? (
-              <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                <p className="text-lg mb-2">📅 No archive games yet!</p>
-                <p className="text-sm">This is the first game. Check back tomorrow for archives.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 mb-4">
-                {(() => {
-                  const totalGames = gameNumber - 1;
-                  const startIndex = (currentPage - 1) * gamesPerPage;
-                  const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
-                  
-                  return Array.from({ length: endIndex - startIndex }, (_, i) => {
+            {(() => {
+              const currentGameNumber = getGameNumber();
+              if (currentGameNumber === 1) {
+                return (
+                  <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <p className="text-lg mb-2">📅 No archive games yet!</p>
+                    <p className="text-sm">This is the first game. Check back tomorrow for archives.</p>
+                  </div>
+                );
+              }
+              
+              const totalGames = currentGameNumber - 1;
+              const startIndex = (currentPage - 1) * gamesPerPage;
+              const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
+              
+              return (
+                <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 mb-4">
+                  {Array.from({ length: endIndex - startIndex }, (_, i) => {
                     const num = totalGames - (startIndex + i); // Reverse order (newest first)
                     const gameDate = new Date('2026-01-31');
                     gameDate.setDate(gameDate.getDate() + num - 1);
                     const dateStr = gameDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    const isCurrentGame = num === gameNumber;
                     
                     return (
                       <button
@@ -223,25 +230,33 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
                           setArchiveNumber('');
                           setCurrentPage(1);
                         }}
-                        className={`p-3 rounded-lg font-semibold text-sm transition-all hover:scale-105 ${
-                          isDark
-                            ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
-                            : 'bg-purple-100 hover:bg-purple-200 text-purple-900'
+                        className={`p-3 rounded-lg font-semibold text-sm transition-all hover:scale-105 relative ${
+                          isCurrentGame
+                            ? isDark
+                              ? 'bg-green-700 hover:bg-green-600 text-white ring-2 ring-green-400'
+                              : 'bg-green-600 hover:bg-green-700 text-white ring-2 ring-green-300'
+                            : isDark
+                              ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
+                              : 'bg-purple-100 hover:bg-purple-200 text-purple-900'
                         }`}
-                        title={dateStr}
+                        title={`${dateStr}${isCurrentGame ? ' (Currently Playing)' : ''}`}
                       >
+                        {isCurrentGame && (
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                        )}
                         <div className="text-base">#{num}</div>
                         <div className="text-[10px] opacity-75">{dateStr}</div>
                       </button>
                     );
-                  });
-                })()}
-              </div>
-            )}
+                })}
+                </div>
+              );
+            })()}
             
             {/* Pagination controls */}
             {(() => {
-              const totalGames = gameNumber - 1;
+              const currentGameNumber = getGameNumber();
+              const totalGames = currentGameNumber - 1;
               const totalPages = Math.ceil(totalGames / gamesPerPage);
               
               if (totalPages <= 1) return null;
