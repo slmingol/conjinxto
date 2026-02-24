@@ -199,7 +199,6 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
             <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 mb-4">
               {(() => {
                 const totalGames = gameNumber - 1;
-                const totalPages = Math.ceil(totalGames / gamesPerPage);
                 const startIndex = (currentPage - 1) * gamesPerPage;
                 const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
                 
