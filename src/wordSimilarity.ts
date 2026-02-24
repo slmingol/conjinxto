@@ -297,6 +297,44 @@ export async function getClosestWords(targetWord: string, guessedWords: Set<stri
       })
     );
     
+    // Check if the target word itself was guessed
+    const targetWasGuessed = guessedWords.has(targetWord.toLowerCase());
+    
+    // If target was guessed, ensure it's in the list at rank #1
+    if (targetWasGuessed) {
+      const targetInList = closestWords.find(w => w.word.toLowerCase() === targetWord.toLowerCase());
+      
+      if (!targetInList) {
+        // Target not in API results, add it at rank #1
+        closestWords.unshift({
+          word: targetWord,
+          rank: 1,
+          similarity: 1.0,
+          isGuessed: true,
+        });
+        // Adjust ranks for all other words
+        for (let i = 1; i < closestWords.length; i++) {
+          closestWords[i].rank = i + 1;
+        }
+      } else {
+        // Target is in list but might not be at rank #1, move it there
+        const targetIndex = closestWords.indexOf(targetInList);
+        if (targetIndex > 0) {
+          closestWords.splice(targetIndex, 1);
+          targetInList.rank = 1;
+          targetInList.similarity = 1.0;
+          closestWords.unshift(targetInList);
+          // Adjust ranks
+          for (let i = 1; i < closestWords.length; i++) {
+            closestWords[i].rank = i + 1;
+          }
+        } else {
+          // Already at rank #1, just ensure similarity is 1.0
+          targetInList.similarity = 1.0;
+        }
+      }
+    }
+    
     return closestWords;
   } catch (error) {
     console.error('Failed to get closest words:', error);
