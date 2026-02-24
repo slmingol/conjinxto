@@ -88,7 +88,7 @@ function App() {
   // Initialize completion tracking on mount
   useEffect(() => {
     // If game is already complete on load, mark as already shown to prevent modal
-    if (gameState.isComplete && gameState.guesses.some(g => g.similarity >= 0.9999)) {
+    if (gameState.isComplete && gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase())) {
       previousIsComplete.current = true;
       hasShownModalThisSession.current = true;
     }
@@ -97,7 +97,7 @@ function App() {
   // Show win modal when game is completed successfully
   useEffect(() => {
     const hasWon = gameState.isComplete && gameState.guesses.length > 0 && 
-        gameState.guesses.some(g => g.similarity >= 0.9999);
+        gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase());
     
     if (hasWon) {
       // If this is a NEW win (isComplete just changed from false to true), always show modal
@@ -239,16 +239,16 @@ function App() {
           {showRestoredNotice && (
             <div className={`mb-4 px-4 py-3 rounded-lg shadow-lg 
                             flex items-center justify-between animate-fade-in ${
-              gameState.isComplete && gameState.guesses.some(g => g.similarity >= 0.9999)
+              gameState.isComplete && gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase())
                 ? 'bg-green-500/90 text-white'
                 : 'bg-blue-500/90 text-white'
             }`}>
               <span className="flex items-center">
                 <span className="text-xl mr-2">
-                  {gameState.isComplete && gameState.guesses.some(g => g.similarity >= 0.9999) ? '🎉' : '💾'}
+                  {gameState.isComplete && gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase()) ? '🎉' : '💾'}
                 </span>
                 <span>
-                  {gameState.isComplete && gameState.guesses.some(g => g.similarity >= 0.9999)
+                  {gameState.isComplete && gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase())
                     ? `${t.completedToday} ${gameState.attempts} ${gameState.attempts !== 1 ? t.attempts_plural : t.attempt}.`
                     : `${t.progressSaved} ${gameState.guesses.length} ${gameState.guesses.length !== 1 ? t.attempts_plural : t.attempt}.`
                   }
@@ -346,7 +346,7 @@ function App() {
         </div>
 
         {/* Show answer when gave up (not won) */}
-        {gameState.isComplete && !gameState.guesses.some(g => g.similarity >= 0.9999) && (
+        {gameState.isComplete && !gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase()) && (
           <div className={`backdrop-blur-sm rounded-xl p-6 shadow-2xl mb-6 ${
             theme === 'dark' ? 'bg-yellow-500/20 border-2 border-yellow-500/50' : 'bg-yellow-100/80 border-2 border-yellow-500'
           }`}>

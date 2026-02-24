@@ -85,22 +85,34 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
             </p>
           </div>
 
-          {/* Loading state */}
+          {/* Loading indicator banner */}
           {isLoading && (
-            <div className="flex-1 flex items-center justify-center">
-              <div className="text-center">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent"></div>
-                <p className={`mt-4 text-sm ${
-                  isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}>
-                  Loading closest words...
-                </p>
-              </div>
+            <div className={`mb-3 px-4 py-2 rounded-lg flex items-center gap-3 ${
+              isDark ? 'bg-purple-900/30' : 'bg-purple-100'
+            }`}>
+              <div className="inline-block animate-spin rounded-full h-5 w-5 border-2 border-purple-600 border-t-transparent"></div>
+              <p className={`text-sm ${
+                isDark ? 'text-gray-300' : 'text-gray-700'
+              }`}>
+                Loading top 500 closest words from API...
+              </p>
             </div>
           )}
 
           {/* Scrollable list */}
-          {!isLoading && (
+          {displayWords.length === 0 && !isLoading && (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center">
+                <p className={`text-sm ${
+                  isDark ? 'text-gray-400' : 'text-gray-600'
+                }`}>
+                  No words to display. Please try making some guesses first.
+                </p>
+              </div>
+            </div>
+          )}
+          
+          {displayWords.length > 0 && (
             <div className="flex-1 overflow-y-auto">
               <div className="space-y-2">
                 {displayWords.map((word) => {
@@ -153,15 +165,13 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
           )}
 
           {/* Info footer */}
-          {!isLoading && (
-            <div className={`mt-4 pt-4 border-t text-center text-xs ${
-              isDark ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-600'
-            }`}>
-              {closestWords.length > 0 
-                ? `Showing ${displayWords.length} closest words • ${guessedCount} guessed`
-                : `You've found ${displayWords.length} word${displayWords.length !== 1 ? 's' : ''} so far`}
-            </div>
-          )}
+          <div className={`mt-4 pt-4 border-t text-center text-xs ${
+            isDark ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-600'
+          }`}>
+            {closestWords.length > 0 
+              ? `Showing ${displayWords.length} closest words • ${guessedCount} guessed`
+              : `You've found ${displayWords.length} word${displayWords.length !== 1 ? 's' : ''} so far`}
+          </div>
 
           {/* Close button */}
           <div className="flex justify-center mt-4">

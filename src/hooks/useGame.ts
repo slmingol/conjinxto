@@ -87,7 +87,7 @@ export function useGame() {
   // Record statistics when a game is won (only once, and only for daily games)
   useEffect(() => {
     if (gameState.isComplete && gameState.guesses.length > 0 && !gameState.statsRecorded && gameState.gameMode === 'daily') {
-      const hasWon = gameState.guesses.some(g => g.similarity >= 0.9999);
+      const hasWon = gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase());
       if (hasWon) {
         recordWin(gameState.attempts);
         // Mark stats as recorded
@@ -141,7 +141,8 @@ export function useGame() {
       };
 
       const newGuesses = [...gameState.guesses, guess];
-      const isComplete = similarity >= 0.9999;
+      // Win condition: exact word match (case-insensitive)
+      const isComplete = normalizedWord === gameState.targetWord.toLowerCase();
 
       setGameState({
         ...gameState,
@@ -246,7 +247,8 @@ export function useGame() {
       };
 
       const newGuesses = [...gameState.guesses, hintGuess];
-      const isComplete = similarity >= 0.9999;
+      // Win condition: exact word match (case-insensitive)
+      const isComplete = hintWord.toLowerCase() === gameState.targetWord.toLowerCase();
 
       setGameState({
         ...gameState,
