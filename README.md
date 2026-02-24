@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/assets/conjinxto_logo.png?v=8" alt="Conjinxto Logo" width="200"/>
+  <img src="src/assets/conjinxto_logo.png?v=9" alt="Conjinxto Logo" width="200"/>
 </div>
 
 # Conjinxto
