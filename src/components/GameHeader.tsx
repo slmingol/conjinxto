@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Translations } from '../translations';
 import { GameMode } from '../types';
-import logoImage from '../assets/conjinxto_logo.png';
 
 interface GameHeaderProps {
   attempts: number;
@@ -81,10 +80,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   return (
     <div className="flex justify-between items-start mb-6">
       <div>
-        <div className="flex items-center gap-3">
-          <img src={logoImage} alt="Conjinxto Logo" className="h-12 w-12 object-contain" />
-          <h1 className={`text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
-        </div>
+        <h1 className={`text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
         <p className={`text-xs mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>Word Similarity Game...</p>
       </div>
       <div className="flex flex-col items-end gap-2">

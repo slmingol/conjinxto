@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="src/assets/conjinxto_logo.png?v=7" alt="Conjinxto Logo" width="200"/>
-</div>
-
 # Conjinxto
 
 [![Version](https://img.shields.io/github/package-json/v/slmingol/conjinxto?label=Version&color=brightgreen)](https://github.com/slmingol/conjinxto)
