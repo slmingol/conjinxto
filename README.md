@@ -1,4 +1,8 @@
-# <img src="https://raw.githubusercontent.com/slmingol/conjinxto/main/src/assets/conjinxto_logo.png" alt="Conjinxto Logo" width="100" align="top"/> Conjinxto
+<div align="center">
+  <img src="https://raw.githubusercontent.com/slmingol/conjinxto/main/src/assets/conjinxto_logo.png" alt="Conjinxto Logo" width="200"/>
+</div>
+
+# Conjinxto
 
 [![Version](https://img.shields.io/github/package-json/v/slmingol/conjinxto?label=Version&color=brightgreen)](https://github.com/slmingol/conjinxto)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
