@@ -269,6 +269,8 @@ export function useGame() {
   }, [gameState]);
 
   const playArchiveGame = useCallback((archiveGameNumber: number) => {
+    const currentGameNumber = getGameNumber();
+    const isToday = archiveGameNumber === currentGameNumber;
     const targetWord = getWordByGameNumber(archiveGameNumber);
     const newState: GameState = {
       guesses: [],
@@ -278,14 +280,16 @@ export function useGame() {
       hintsUsed: 0,
       gameNumber: archiveGameNumber,
       statsRecorded: false,
-      gameMode: 'archive',
+      gameMode: isToday ? 'daily' : 'archive',
     };
     setGameState(newState);
     setInputWord('');
     setError(null);
-    // Clear localStorage when switching to archive mode
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(STORAGE_DATE_KEY);
+    // Clear localStorage only when switching to a past archive game
+    if (!isToday) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_DATE_KEY);
+    }
   }, []);
 
   return {
