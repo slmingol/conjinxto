@@ -118,18 +118,22 @@ export function useGame() {
     setError(null);
 
     // Check if word is valid (using expanded dictionary)
-    try {
-      const isValid = await isWordInDictionary(normalizedWord);
-      if (!isValid) {
-        setError(`The word "${word}" doesn't exist in our dictionary`);
+    // Skip dictionary check for multi-word phrases (scientific names, etc.)
+    const isMultiWord = normalizedWord.includes(' ');
+    if (!isMultiWord) {
+      try {
+        const isValid = await isWordInDictionary(normalizedWord);
+        if (!isValid) {
+          setError(`The word "${word}" doesn't exist in our dictionary`);
+          setIsLoading(false);
+          return;
+        }
+      } catch (error) {
+        console.error('Dictionary lookup failed:', error);
+        setError('Failed to validate word. Please try again.');
         setIsLoading(false);
         return;
       }
-    } catch (error) {
-      console.error('Dictionary lookup failed:', error);
-      setError('Failed to validate word. Please try again.');
-      setIsLoading(false);
-      return;
     }
 
     try {
