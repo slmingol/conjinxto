@@ -145,15 +145,10 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
                         #{word.rank}
                       </div>
                       <div>
-                        <div className={`font-semibold flex items-center gap-1.5 text-base ${
+                        <div className={`font-semibold text-base ${
                           isDark ? 'text-white' : 'text-gray-900'
                         }`}>
                           {word.word}
-                          {word.isGuessed && (
-                            <span className="text-xs bg-green-500 text-white px-1.5 py-0.5 rounded-full">
-                              ✓ guessed
-                            </span>
-                          )}
                         </div>
                         <div className={`text-xs ${
                           isDark ? 'text-gray-400' : 'text-gray-600'
@@ -162,6 +157,11 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
                         </div>
                       </div>
                     </div>
+                    {word.isGuessed && (
+                      <span className="text-xs bg-green-500 text-white px-1.5 py-0.5 rounded-full">
+                        ✓ guessed
+                      </span>
+                    )}
                   </div>
                 );
               })}

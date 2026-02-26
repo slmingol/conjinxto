@@ -59,7 +59,11 @@ export const GuessList: React.FC<GuessListProps> = ({ guesses, sortBy = 'similar
         const isTopGuess = rank === 1;
 
         // Calculate percentage for bar (0-100%)
-        const percentage = Math.round(guess.similarity * 100);
+        // Show more precision for very high similarities to avoid rounding to 100%
+        const similarityPercent = guess.similarity * 100;
+        const percentage = similarityPercent >= 99 
+          ? similarityPercent.toFixed(1)
+          : Math.round(similarityPercent);
         
         return (
           <div
@@ -99,7 +103,7 @@ export const GuessList: React.FC<GuessListProps> = ({ guesses, sortBy = 'similar
             }`}>
               <div
                 className={`h-full ${bgColor} transition-all duration-300 ease-out`}
-                style={{ width: `${percentage}%` }}
+                style={{ width: `${similarityPercent}%` }}
               ></div>
             </div>
           </div>
