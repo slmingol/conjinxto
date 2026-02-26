@@ -158,7 +158,7 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
                       </div>
                     </div>
                     {word.isGuessed && (
-                      <span className="text-xs bg-green-500 text-white px-1.5 py-0.5 rounded-full">
+                      <span className="text-xs bg-purple-600 text-white px-1.5 py-0.5 rounded-full">
                         ✓ guessed
                       </span>
                     )}
