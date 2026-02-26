@@ -179,17 +179,24 @@ function App() {
 
   const handleOpenClosestWords = async () => {
     setShowClosestWords(true);
-    setIsLoadingClosestWords(true);
     
-    try {
-      const guessedWords = new Set(gameState.guesses.map(g => g.word.toLowerCase()));
-      const closest = await getClosestWords(gameState.targetWord, guessedWords);
-      setClosestWords(closest);
-    } catch (error) {
-      console.error('Error fetching closest words:', error);
+    // Only fetch top 500 closest words if the game is complete
+    // Otherwise, just show the player's guesses to avoid spoiling the answer
+    if (gameState.isComplete) {
+      setIsLoadingClosestWords(true);
+      try {
+        const guessedWords = new Set(gameState.guesses.map(g => g.word.toLowerCase()));
+        const closest = await getClosestWords(gameState.targetWord, guessedWords);
+        setClosestWords(closest);
+      } catch (error) {
+        console.error('Error fetching closest words:', error);
+        setClosestWords([]);
+      } finally {
+        setIsLoadingClosestWords(false);
+      }
+    } else {
+      // Game not complete - don't fetch from API, just show guesses
       setClosestWords([]);
-    } finally {
-      setIsLoadingClosestWords(false);
     }
   };
 

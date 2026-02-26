@@ -35,8 +35,13 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
   }, [onClose]);
   
   // If we have closest words from API, use those; otherwise fall back to just showing guesses
+  // Filter out target word from guesses too if game is not complete
+  const filteredGuesses = shouldShowSolution
+    ? guesses
+    : guesses.filter(g => g.word.toLowerCase() !== targetWord.toLowerCase());
+  
   const displayWords = filteredClosestWords.length > 0 ? filteredClosestWords : 
-    [...guesses]
+    [...filteredGuesses]
       .sort((a, b) => b.similarity - a.similarity)
       .map((guess, index) => ({
         word: guess.word,
@@ -53,7 +58,7 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
       onClick={onClose}
     >
       <div 
-        className={`rounded-2xl p-6 max-w-2xl w-full mx-auto shadow-2xl animate-fade-in relative max-h-[80vh] overflow-hidden flex flex-col ${
+        className={`rounded-2xl p-4 max-w-xl w-full mx-auto shadow-2xl animate-fade-in relative max-h-[80vh] overflow-hidden flex flex-col ${
           isDark ? 'bg-gray-800' : 'bg-white'
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -61,35 +66,37 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
         {/* Close button */}
         <button
           onClick={onClose}
-          className={isDark ? 'absolute top-3 right-3 text-gray-400 hover:text-gray-200 text-xl font-bold' : 'absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl font-bold'}
+          className={isDark ? 'absolute top-2 right-2 text-gray-400 hover:text-gray-200 text-lg font-bold' : 'absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-lg font-bold'}
           aria-label="Close"
         >
           ×
         </button>
         
-        <div className="flex flex-col h-full">
-          <div className="text-center mb-4">
-            <h2 className={`text-xl font-bold ${
+        <div className="flex flex-col min-h-0 flex-1">
+          <div className="text-center mb-2 flex-shrink-0">
+            <h2 className={`text-lg font-bold ${
               isDark ? 'text-white' : 'text-gray-800'
             }`}>
               📊 Closest Words
             </h2>
-            <p className={`text-sm mt-2 ${
+            <p className={`text-xs mt-1 ${
               isDark ? 'text-gray-400' : 'text-gray-600'
             }`}>
               {closestWords.length > 0 
                 ? `Top 500 closest words - You've guessed ${guessedCount}` 
-                : 'Your guesses ranked from closest to farthest'}
+                : isComplete
+                  ? 'Your guesses ranked from closest to farthest'
+                  : 'Your guesses ranked from closest to farthest (complete the puzzle to see all top 500 words)'}
             </p>
           </div>
 
           {/* Loading indicator banner */}
           {isLoading && (
-            <div className={`mb-3 px-4 py-2 rounded-lg flex items-center gap-3 ${
+            <div className={`mb-2 px-3 py-1.5 rounded-lg flex items-center gap-2 flex-shrink-0 ${
               isDark ? 'bg-purple-900/30' : 'bg-purple-100'
             }`}>
-              <div className="inline-block animate-spin rounded-full h-5 w-5 border-2 border-purple-600 border-t-transparent"></div>
-              <p className={`text-sm ${
+              <div className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-purple-600 border-t-transparent"></div>
+              <p className={`text-xs ${
                 isDark ? 'text-gray-300' : 'text-gray-700'
               }`}>
                 Loading top 500 closest words from API...
@@ -101,7 +108,7 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
           {displayWords.length === 0 && !isLoading && (
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <p className={`text-sm ${
+                <p className={`text-xs ${
                   isDark ? 'text-gray-400' : 'text-gray-600'
                 }`}>
                   No words to display. Please try making some guesses first.
@@ -111,22 +118,22 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
           )}
           
           {displayWords.length > 0 && (
-            <div className="flex-1 overflow-y-auto">
-              <div className="space-y-2">
+            <div className="flex-1 overflow-y-auto min-h-0 -mx-2 px-2">
+              <div className="space-y-1.5 pb-2">
                 {displayWords.map((word) => {
                   const similarityPercent = (word.similarity * 100).toFixed(1);
                 
                 return (
                   <div
                     key={word.word}
-                    className={`flex items-center justify-between p-3 rounded-lg ${
+                    className={`flex items-center justify-between p-2 rounded-lg ${
                       word.isGuessed 
                         ? (isDark ? 'bg-purple-900/50 border border-purple-500/50' : 'bg-purple-100 border border-purple-300')
                         : (isDark ? 'bg-gray-700' : 'bg-gray-50')
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={`flex items-center justify-center w-12 h-10 rounded-lg font-bold text-sm ${
+                    <div className="flex items-center gap-2">
+                      <div className={`flex items-center justify-center w-10 h-8 rounded-lg font-bold text-xs ${
                         word.rank === 1 
                           ? 'bg-yellow-500 text-white'
                           : word.rank <= 10
@@ -138,17 +145,17 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
                         #{word.rank}
                       </div>
                       <div>
-                        <div className={`font-semibold flex items-center gap-2 ${
+                        <div className={`font-semibold flex items-center gap-1.5 text-sm ${
                           isDark ? 'text-white' : 'text-gray-900'
                         }`}>
                           {word.word}
                           {word.isGuessed && (
-                            <span className="text-xs bg-green-500 text-white px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] bg-green-500 text-white px-1.5 py-0.5 rounded-full">
                               ✓ guessed
                             </span>
                           )}
                         </div>
-                        <div className={`text-xs ${
+                        <div className={`text-[11px] ${
                           isDark ? 'text-gray-400' : 'text-gray-600'
                         }`}>
                           {similarityPercent}% similar
@@ -163,7 +170,7 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
           )}
 
           {/* Info footer */}
-          <div className={`mt-4 pt-4 border-t text-center text-xs ${
+          <div className={`mt-2 pt-2 border-t text-center text-xs flex-shrink-0 ${
             isDark ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-600'
           }`}>
             {closestWords.length > 0 
@@ -172,11 +179,11 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
           </div>
 
           {/* Close button */}
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-2 flex-shrink-0">
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white 
-                         font-semibold rounded-lg transition-colors shadow-lg text-sm"
+              className="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white 
+                         font-semibold rounded-lg transition-colors shadow-lg text-xs"
             >
               Close
             </button>
