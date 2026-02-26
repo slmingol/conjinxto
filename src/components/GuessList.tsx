@@ -59,11 +59,20 @@ export const GuessList: React.FC<GuessListProps> = ({ guesses, sortBy = 'similar
         const isTopGuess = rank === 1;
 
         // Calculate percentage for bar (0-100%)
-        // Show more precision for very high similarities to avoid rounding to 100%
+        // Show more precision for very high similarities to avoid showing 100% for non-answers
         const similarityPercent = guess.similarity * 100;
-        const percentage = similarityPercent >= 99 
-          ? similarityPercent.toFixed(1)
-          : Math.round(similarityPercent);
+        let percentage;
+        
+        if (similarityPercent >= 99) {
+          // Very high similarity - truncate to 2 decimals and cap at 99.99
+          // This prevents any non-answer words from showing as 100%
+          const truncated = Math.floor(similarityPercent * 100) / 100;
+          const capped = Math.min(truncated, 99.99);
+          percentage = capped.toFixed(2);
+        } else {
+          // Round to whole number for lower similarities
+          percentage = Math.round(similarityPercent).toString();
+        }
         
         return (
           <div

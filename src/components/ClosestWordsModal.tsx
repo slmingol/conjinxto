@@ -121,47 +121,79 @@ export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, c
             <div className="flex-1 overflow-y-auto min-h-0 -mx-2 px-2">
               <div className="space-y-1.5 pb-2">
                 {displayWords.map((word) => {
-                  const similarityPercent = (word.similarity * 100).toFixed(1);
+                  const similarityValue = word.similarity * 100;
+                  // Show more precision for very high similarities to avoid showing 100% for non-answers
+                  let similarityPercent;
+                  // Check if this is the actual target word
+                  const isTargetWord = word.word.toLowerCase() === targetWord.toLowerCase();
+                  
+                  if (isTargetWord) {
+                    // The actual answer - always show as 100%
+                    similarityPercent = '100';
+                  } else if (similarityValue >= 99) {
+                    // Very high similarity - truncate to 2 decimals to prevent rounding to 100
+                    const truncated = Math.floor(similarityValue * 100) / 100;
+                    // Cap at 99.99 to ensure non-answers never show as 100%
+                    const capped = Math.min(truncated, 99.99);
+                    similarityPercent = capped.toFixed(2);
+                  } else {
+                    // Round to whole number for lower similarities
+                    similarityPercent = Math.round(similarityValue).toString();
+                  }
+                  
+                  // Rank-based colors for bar graph
+                  let barColor = 'bg-gray-500';
+                  if (word.rank === 1) {
+                    barColor = 'bg-yellow-500';
+                  } else if (word.rank <= 10) {
+                    barColor = 'bg-green-500';
+                  } else if (word.rank <= 50) {
+                    barColor = 'bg-blue-500';
+                  }
                 
                 return (
                   <div
                     key={word.word}
-                    className={`flex items-center justify-between p-2 rounded-lg ${
+                    className={`p-2 rounded-lg ${
                       word.isGuessed 
                         ? (isDark ? 'bg-purple-900/50 border border-purple-500/50' : 'bg-purple-100 border border-purple-300')
                         : (isDark ? 'bg-gray-700' : 'bg-gray-50')
                     }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className={`flex items-center justify-center w-10 h-8 rounded-lg font-bold text-sm ${
-                        word.rank === 1 
-                          ? 'bg-yellow-500 text-white'
-                          : word.rank <= 10
-                          ? 'bg-green-500 text-white'
-                          : word.rank <= 50
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-gray-500 text-white'
-                      }`}>
-                        #{word.rank}
-                      </div>
-                      <div>
-                        <div className={`font-semibold text-base ${
-                          isDark ? 'text-white' : 'text-gray-900'
-                        }`}>
-                          {word.word}
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className={`flex items-center justify-center w-10 h-8 rounded-lg font-bold text-sm ${barColor} text-white`}>
+                          #{word.rank}
                         </div>
-                        <div className={`text-xs ${
-                          isDark ? 'text-gray-400' : 'text-gray-600'
-                        }`}>
-                          {similarityPercent}% similar
+                        <div>
+                          <div className={`font-semibold text-base ${
+                            isDark ? 'text-white' : 'text-gray-900'
+                          }`}>
+                            {word.word}
+                          </div>
+                          <div className={`text-xs ${
+                            isDark ? 'text-gray-400' : 'text-gray-600'
+                          }`}>
+                            {similarityPercent}% similar
+                          </div>
                         </div>
                       </div>
+                      {word.isGuessed && (
+                        <span className="text-xs bg-purple-600 text-white px-1.5 py-0.5 rounded-full">
+                          ✓ guessed
+                        </span>
+                      )}
                     </div>
-                    {word.isGuessed && (
-                      <span className="text-xs bg-purple-600 text-white px-1.5 py-0.5 rounded-full">
-                        ✓ guessed
-                      </span>
-                    )}
+                    
+                    {/* Bar graph visualization */}
+                    <div className={`w-full h-1.5 rounded-full overflow-hidden ${
+                      isDark ? 'bg-gray-600' : 'bg-gray-200'
+                    }`}>
+                      <div
+                        className={`h-full ${barColor} transition-all duration-300 ease-out`}
+                        style={{ width: `${similarityValue}%` }}
+                      ></div>
+                    </div>
                   </div>
                 );
               })}
