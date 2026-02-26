@@ -8,9 +8,14 @@ VERSION=$(cat /etc/app-version 2>/dev/null || echo "unknown")
 echo ""
 echo "╔═══════════════════════════════════════════════════════════╗"
 echo "║                                                           ║"
-echo "║                      CONJINXTO                            ║"
+echo "║                        CONJINXTO                          ║"
 echo "║                                                           ║"
-echo "║                   Version: $VERSION                            ║"
+# Center the version text
+VERSION_TEXT="Version: $VERSION"
+TEXT_LEN=${#VERSION_TEXT}
+TOTAL_WIDTH=59
+PADDING=$(( (TOTAL_WIDTH - TEXT_LEN) / 2 ))
+printf "║%*s%s%*s║\n" $PADDING "" "$VERSION_TEXT" $((TOTAL_WIDTH - TEXT_LEN - PADDING)) ""
 echo "║                                                           ║"
 echo "╚═══════════════════════════════════════════════════════════╝"
 echo ""
