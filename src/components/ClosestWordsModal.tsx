@@ -13,13 +13,11 @@ interface ClosestWordsModalProps {
   isComplete: boolean;
 }
 
-export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, closestWords, isLoading, onClose, theme, targetWord, gameMode, isComplete }) => {
+export const ClosestWordsModal: React.FC<ClosestWordsModalProps> = ({ guesses, closestWords, isLoading, onClose, theme, targetWord, isComplete }) => {
   const isDark = theme === 'dark';
   
-  // Filter out target word unless:
-  // 1. Game is complete (they already know it)
-  // 2. It's an archive game (for learning/practice)
-  const shouldShowSolution = isComplete || gameMode === 'archive';
+  // Filter out target word unless game is complete
+  const shouldShowSolution = isComplete;
   const filteredClosestWords = shouldShowSolution 
     ? closestWords 
     : closestWords.filter(w => w.word.toLowerCase() !== targetWord.toLowerCase());
