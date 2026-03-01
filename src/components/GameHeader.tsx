@@ -91,13 +91,14 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap gap-1.5 md:gap-2 md:space-x-0">
+        <div className="flex flex-wrap gap-1.5 md:gap-2">
           <button
             onClick={onShowSettings}
             className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-sm font-medium flex items-center ${
               isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
             }`}
             title="Settings"
+            aria-label="Settings"
           >
             <span className="text-base">⚙️</span>
           </button>
@@ -107,6 +108,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
               isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
             }`}
             title="View Statistics"
+            aria-label="View Statistics"
           >
             <span className="text-base">📊</span>
           </button>
@@ -117,6 +119,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
                 className="px-2 py-1.5 md:px-4 md:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
                            transition-colors shadow-md text-xs font-medium flex items-center"
                 title="Get a hint"
+                aria-label={t.hint}
               >
                 <span className="text-base mr-0.5 md:mr-1">💡</span>
                 <span className="hidden sm:inline">{t.hint}</span>
@@ -124,21 +127,21 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
               <button
                 onClick={onGiveUp}
                 className="px-2 py-1.5 md:px-4 md:py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg 
-                           transition-colors shadow-md text-xs font-medium"
+                           transition-colors shadow-md text-xs font-medium whitespace-nowrap"
+                aria-label={t.giveUp}
               >
-                <span className="hidden sm:inline">{t.giveUp}</span>
-                <span className="sm:hidden">Give Up</span>
+                {t.giveUp}
               </button>
             </>
           )}
           <button
             onClick={onReset}
-            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-xs font-medium ${
+            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-xs font-medium whitespace-nowrap ${
               isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
             }`}
+            aria-label={t.newGame}
           >
-            <span className="hidden sm:inline">{t.newGame}</span>
-            <span className="sm:hidden">New</span>
+            {t.newGame}
           </button>
         </div>
         <div className="flex flex-col gap-1">
