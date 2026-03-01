@@ -22,7 +22,7 @@ Conjinxto is a word-guessing game where players try to find a secret word by mak
 
 ### Core Gameplay
 - 🎯 **Daily Word Challenge** - New word every day
-- 🧠 **AI-Powered Similarity** - Uses Datamuse API for semantic word relationships
+- 🧠 **AI-Powered Similarity** - Uses [Datamuse API](https://www.datamuse.com/api/) for semantic word relationships
 - 📚 **370,000+ Word Dictionary** - Comprehensive English word validation
 - 💾 **Auto-Save Progress** - Never lose your progress with localStorage persistence
 - 📊 **Smart Ranking** - Color-coded ranks (Green: 1-3, Yellow: 4-10, Red: 11+)
@@ -59,8 +59,8 @@ Conjinxto is a word-guessing game where players try to find a secret word by mak
 - **Build Tool**: Vite 7.3.1
 - **Language**: TypeScript 5.9.3
 - **Styling**: Tailwind CSS 4.2.0 (CSS-based configuration)
-- **API**: Datamuse API for word similarity
-- **Dictionary**: DWYL English Words (370,105 words)
+- **API**: [Datamuse API](https://www.datamuse.com/api/) for word similarity
+- **Dictionary**: [DWYL English Words](https://github.com/dwyl/english-words) (370,105 words)
 - **Persistence**: Browser localStorage
 
 ## 🚀 Getting Started
@@ -270,7 +270,7 @@ Lazy-loads 370k word dictionary:
 - Loaded on demand (not bundled with initial JS)
 - Cached in memory as a Set for O(1) lookups
 - Background preloading for better UX
-- 4.1MB text file from DWYL english-words
+- 4.1MB text file from [DWYL english-words](https://github.com/dwyl/english-words)
 
 ## 💾 Data Persistence
 
