@@ -206,7 +206,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-3 md:py-8 px-3 md:px-4">
       <div className="max-w-4xl mx-auto">
         <GameHeader
           attempts={gameState.attempts}
