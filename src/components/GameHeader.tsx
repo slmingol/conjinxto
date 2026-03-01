@@ -87,7 +87,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
         <img src={logoImage} alt="Conjinxto Logo" className="h-12 w-12 md:h-20 md:w-20 object-contain flex-shrink-0" />
         <div>
           <h1 className={`text-2xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
-          <p className={`text-xs mt-0.5 md:mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>Word Similarity Game...</p>
+          <p className={`text-xs mt-0.5 md:mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>{t.subtitle}</p>
         </div>
       </div>
       <div className="flex flex-col gap-2">
@@ -122,7 +122,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
                 aria-label={t.hint}
               >
                 <span className="text-base mr-0.5 md:mr-1">💡</span>
-                <span className="hidden sm:inline">{t.hint}</span>
+                <span className="hidden md:inline">{t.hint}</span>
               </button>
               <button
                 onClick={onGiveUp}
