@@ -20,7 +20,7 @@ const SETTINGS_KEY = 'conjinxto-settings';
 function createDefaultSettings(): GameSettings {
   return {
     language: 'en',
-    theme: 'system',
+    theme: 'light',
     hintDifficulty: 'medium',
     sortBy: 'similarity',
   };
