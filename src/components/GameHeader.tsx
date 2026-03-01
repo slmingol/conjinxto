@@ -82,31 +82,33 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   };
   
   return (
-    <div className="flex justify-between items-start mb-6">
-      <div>
-        <div className="flex items-center gap-3">
-          <img src={logoImage} alt="Conjinxto Logo" className="h-20 w-20 object-contain" />
-          <h1 className={`text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
+    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 md:mb-6 gap-3 md:gap-0">
+      <div className="flex items-center gap-2 md:gap-3">
+        <img src={logoImage} alt="Conjinxto Logo" className="h-12 w-12 md:h-20 md:w-20 object-contain flex-shrink-0" />
+        <div>
+          <h1 className={`text-2xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
+          <p className={`text-xs mt-0.5 md:mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>{t.subtitle}</p>
         </div>
-        <p className={`text-xs mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>Word Similarity Game...</p>
       </div>
-      <div className="flex flex-col items-end gap-2">
-        <div className="flex space-x-2">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap gap-1.5 md:gap-2">
           <button
             onClick={onShowSettings}
-            className={`px-4 py-2 rounded-lg transition-colors shadow-md text-sm font-medium flex items-center ${
+            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-sm font-medium flex items-center ${
               isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
             }`}
             title="Settings"
+            aria-label="Settings"
           >
             <span className="text-base">⚙️</span>
           </button>
           <button
             onClick={onShowStats}
-            className={`px-4 py-2 rounded-lg transition-colors shadow-md text-xs font-medium flex items-center ${
+            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-xs font-medium flex items-center ${
               isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
             }`}
             title="View Statistics"
+            aria-label="View Statistics"
           >
             <span className="text-base">📊</span>
           </button>
@@ -114,17 +116,19 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
             <>
               <button
                 onClick={onGetHint}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
+                className="px-2 py-1.5 md:px-4 md:py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
                            transition-colors shadow-md text-xs font-medium flex items-center"
                 title="Get a hint"
+                aria-label={t.hint}
               >
-                <span className="text-base mr-1">💡</span>
-                {t.hint}
+                <span className="text-base mr-0.5 md:mr-1">💡</span>
+                <span className="hidden md:inline">{t.hint}</span>
               </button>
               <button
                 onClick={onGiveUp}
-                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg 
-                           transition-colors shadow-md text-xs font-medium"
+                className="px-2 py-1.5 md:px-4 md:py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg 
+                           transition-colors shadow-md text-xs font-medium whitespace-nowrap"
+                aria-label={t.giveUp}
               >
                 {t.giveUp}
               </button>
@@ -132,39 +136,40 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
           )}
           <button
             onClick={onReset}
-            className={`px-4 py-2 rounded-lg transition-colors shadow-md text-xs font-medium ${
+            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-xs font-medium whitespace-nowrap ${
               isDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
             }`}
+            aria-label={t.newGame}
           >
             {t.newGame}
           </button>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-base">
             <button
               onClick={() => {
                 setShowArchiveSelector(true);
                 setCurrentPage(1);
               }}
-              className={`text-base hover:underline cursor-pointer ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
+              className={`hover:underline cursor-pointer ${isDark ? 'text-white/80 hover:text-white' : 'text-gray-700 hover:text-gray-900'}`}
               title="Click to play past games"
             >
               Game: <span className="font-bold">#{gameNumber}</span>
               {gameMode === 'archive' && <span className="ml-1 text-xs">(Archive)</span>}
             </button>
-            <p className={`text-base ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
+            <p className={`${isDark ? 'text-white/80' : 'text-gray-700'}`}>
               {t.attempts}: <span className="font-bold">{attempts}</span>
             </p>
-            <p className={`text-base ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
+            <p className={`${isDark ? 'text-white/80' : 'text-gray-700'}`}>
               {t.hints}: <span className="font-bold">{hintsUsed}</span>
             </p>
           </div>
-          <div className="flex flex-col items-end">
-            <p className={`text-xs ${isDark ? 'text-white/60' : 'text-gray-500'}`}>
-              {currentDate}
+          <div className="flex flex-col md:items-end text-xs">
+            <p className={`${isDark ? 'text-white/60' : 'text-gray-500'}`}>
+              <span className="md:hidden">📅 </span>{currentDate}
             </p>
-            <p className={`text-xs ${isDark ? 'text-white/60' : 'text-gray-500'}`}>
-              Next game in: <span className="font-mono">{timeUntilNext}</span>
+            <p className={`${isDark ? 'text-white/60' : 'text-gray-500'}`}>
+              <span className="md:hidden">⏰ </span>Next game in: <span className="font-mono">{timeUntilNext}</span>
             </p>
           </div>
         </div>

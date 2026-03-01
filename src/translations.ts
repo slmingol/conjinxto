@@ -3,6 +3,7 @@ import { Language } from './settings';
 export interface Translations {
   // Header
   title: string;
+  subtitle: string;
   attempts: string;
   hints: string;
   hint: string;
@@ -80,6 +81,7 @@ export const translations: Record<Language, Translations> = {
   en: {
     // Header
     title: 'Conjinxto',
+    subtitle: 'Word Similarity Game...',
     attempts: 'Attempts',
     hints: 'Hints',
     hint: 'Hint',
@@ -156,6 +158,7 @@ export const translations: Record<Language, Translations> = {
   pt: {
     // Header
     title: 'Conjinxto',
+    subtitle: 'Jogo de Similaridade de Palavras...',
     attempts: 'Tentativas',
     hints: 'Dicas',
     hint: 'Dica',
@@ -232,6 +235,7 @@ export const translations: Record<Language, Translations> = {
   es: {
     // Header
     title: 'Conjinxto',
+    subtitle: 'Juego de Similitud de Palabras...',
     attempts: 'Intentos',
     hints: 'Pistas',
     hint: 'Pista',
