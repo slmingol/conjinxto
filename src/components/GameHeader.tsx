@@ -84,14 +84,14 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   return (
     <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 md:mb-6 gap-3 md:gap-0">
       <div className="flex items-center gap-2 md:gap-3">
-        <img src={logoImage} alt="Conjinxto Logo" className="h-12 w-12 md:h-20 md:w-20 object-contain flex-shrink-0" />
+        <img src={logoImage} alt="Conjinxto Logo" className="h-10 w-10 sm:h-12 sm:w-12 md:h-20 md:w-20 object-contain flex-shrink-0" />
         <div>
-          <h1 className={`text-2xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
+          <h1 className={`text-xl sm:text-2xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{t.title}</h1>
           <p className={`text-xs mt-0.5 md:mt-1 ${isDark ? 'text-white/60' : 'text-gray-500'}`}>{t.subtitle}</p>
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap gap-1.5 md:gap-2">
+        <div className="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2">
           <button
             onClick={onShowSettings}
             className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-sm font-medium flex items-center ${

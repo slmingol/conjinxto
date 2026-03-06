@@ -61,9 +61,9 @@ export const GuessInput: React.FC<GuessInputProps> = ({
         <button
           onClick={onSubmit}
           disabled={disabled || !value.trim()}
-          className="px-5 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 
+          className="px-4 sm:px-5 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 
                      text-white font-semibold rounded-lg transition-colors shadow-lg
-                     disabled:cursor-not-allowed disabled:opacity-50 min-w-[90px] text-sm"
+                     disabled:cursor-not-allowed disabled:opacity-50 min-w-[70px] sm:min-w-[90px] text-sm"
         >
           {isLoading ? (
             <span className="flex items-center justify-center">

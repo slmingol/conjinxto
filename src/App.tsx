@@ -231,10 +231,11 @@ function App() {
               ? 'bg-orange-900/30 border-orange-600 text-orange-200' 
               : 'bg-orange-50 border-orange-400 text-orange-800'
           }`}>
-            <div className="flex items-center justify-center">
-              <span className="text-xl mr-2">🕰️</span>
-              <span className="font-semibold">
-                Archive Mode: Playing Game #{gameState.gameNumber} - This game won't affect your statistics
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-center sm:text-left">
+              <span className="text-xl">🕰️</span>
+              <span className="font-semibold text-sm sm:text-base">
+                <span className="block sm:inline">Archive Mode: Game #{gameState.gameNumber}</span>
+                <span className="block sm:inline sm:ml-1">- Won't affect statistics</span>
               </span>
             </div>
           </div>
@@ -313,7 +314,7 @@ function App() {
                 <button
                   onClick={handleOpenClosestWords}
                   disabled={isLoadingClosestWords}
-                  className={`w-full px-4 py-3 rounded-lg font-semibold text-sm transition-all relative overflow-hidden shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`w-full px-3 sm:px-4 py-3 rounded-lg font-semibold text-sm transition-all relative overflow-hidden shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${
                     theme === 'dark'
                       ? 'bg-purple-600/80 hover:bg-purple-600 text-white'
                       : 'bg-purple-600 hover:bg-purple-700 text-white'
@@ -325,26 +326,26 @@ function App() {
                     style={{ width: `${bestPercent}%` }}
                   />
                   
-                  <div className="relative flex items-center justify-between">
+                  <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
                     <div className="relative">
-                      <div className="flex items-center gap-2">
-                        <span>📊 Closest Words</span>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="whitespace-nowrap">📊 Closest Words</span>
                         <span className="text-xs opacity-90">({gameState.guesses.length} guesses)</span>
                         {showNewBestBadge && (
                           <span className="animate-bounce text-yellow-300">🌟</span>
                         )}
                       </div>
                     </div>
-                    {/* Hint: Press C - centered */}
-                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[10px] opacity-50">
-                      Press C
-                    </div>
-                    <div className="flex items-center gap-2 text-xs opacity-90">
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-xs opacity-90 flex-wrap">
                       <span>Best:</span>
-                      <span className="font-bold">{bestGuess.word}</span>
-                      <span className="px-2 py-0.5 bg-white/20 rounded">#{1}</span>
-                      <span className="px-2 py-0.5 bg-white/20 rounded">{bestPercent}%</span>
+                      <span className="font-bold truncate max-w-[100px] sm:max-w-none">{bestGuess.word}</span>
+                      <span className="px-1.5 sm:px-2 py-0.5 bg-white/20 rounded whitespace-nowrap">#{1}</span>
+                      <span className="px-1.5 sm:px-2 py-0.5 bg-white/20 rounded whitespace-nowrap">{bestPercent}%</span>
                     </div>
+                  </div>
+                  {/* Hint: Press C - mobile hidden */}
+                  <div className="hidden sm:block absolute -bottom-3 left-1/2 -translate-x-1/2 text-[10px] opacity-50">
+                    Press C
                   </div>
                 </button>
               </div>
