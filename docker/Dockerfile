@@ -22,7 +22,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy custom nginx configuration (optional)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy package.json to extract version
 COPY --from=builder /app/package.json /tmp/package.json
@@ -35,7 +35,7 @@ RUN apk add --no-cache jq && \
     apk del jq
 
 # Copy and set up entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # Expose port 80

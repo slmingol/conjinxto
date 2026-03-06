@@ -1,0 +1,10 @@
+services:
+  conjinxto:
+    image: ghcr.io/slmingol/conjinxto:latest
+    container_name: conjinxto
+    restart: unless-stopped
+    ports:
+      - "3199:80"
+    environment:
+      - NODE_ENV=production
+

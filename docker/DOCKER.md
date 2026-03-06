@@ -2,6 +2,8 @@
 
 This guide explains how to run the Contexto Clone using Docker.
 
+> **Note:** All Docker-related files are located in the `docker/` directory. Docker Compose commands should be run from the project root directory.
+
 ## Prerequisites
 
 - Docker 20.10+
