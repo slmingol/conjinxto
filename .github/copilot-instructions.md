@@ -36,8 +36,8 @@ npm run build              # TypeScript compilation → Vite build → dist/
 npm run preview            # Preview production build locally
 
 # Docker (multi-stage: Node 20-alpine build, Nginx serve)
-docker-compose up -d                      # Build from source
-docker-compose -f docker/docker-compose.simple.yml up -d  # Use prebuilt GHCR image
+podman compose up -d                      # Build from source
+podman compose -f docker/docker-compose.simple.yml up -d  # Use prebuilt GHCR image
 ```
 
 **Build Output**: Optimized bundle in `dist/`, Nginx serves static files
@@ -149,13 +149,13 @@ conjinxto/
 **Production Build**:
 ```bash
 cd conjinxto  # Project root
-docker-compose -f docker/docker-compose.yml up -d
+podman compose -f docker/docker-compose.yml up -d
 ```
 
 **Prebuilt Image** (recommended):
 ```bash
-docker-compose -f docker/docker-compose.simple.yml up -d
-docker-compose -f docker/docker-compose.simple.yml pull  # Update to latest
+podman compose -f docker/docker-compose.simple.yml up -d
+podman compose -f docker/docker-compose.simple.yml pull  # Update to latest
 ```
 
 **Health Checks**: Docker Compose includes health checks (HTTP GET /) and logging configuration
