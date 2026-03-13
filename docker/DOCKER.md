@@ -1,6 +1,6 @@
 # Docker Setup Guide
 
-This guide explains how to run the Contexto Clone using Docker.
+This guide explains how to run Conjinxto using Docker.
 
 > **Note:** All Docker-related files are located in the `docker/` directory. Docker Compose commands should be run from the project root directory.
 
@@ -136,10 +136,10 @@ docker-compose down -v
 
 ```bash
 # Access container shell
-docker exec -it contexto-clone sh
+docker exec -it conjinxto sh
 
 # View nginx logs
-docker exec contexto-clone cat /var/log/nginx/access.log
+docker exec conjinxto cat /var/log/nginx/access.log
 
 # Restart container
 docker-compose restart
@@ -197,7 +197,7 @@ docker-compose ps
 docker-compose logs
 
 # Verify port mapping
-docker port contexto-clone
+docker port conjinxto
 ```
 
 ### Hot reload not working (dev mode)
@@ -226,36 +226,36 @@ sudo docker-compose up
 #### Docker Hub
 ```bash
 # Tag image
-docker tag contexto-clone yourusername/contexto-clone:latest
+docker tag conjinxto yourusername/conjinxto:latest
 
 # Push to Docker Hub
-docker push yourusername/contexto-clone:latest
+docker push yourusername/conjinxto:latest
 
 # Pull and run on server
-docker pull yourusername/contexto-clone:latest
-docker run -d -p 80:80 yourusername/contexto-clone:latest
+docker pull yourusername/conjinxto:latest
+docker run -d -p 80:80 yourusername/conjinxto:latest
 ```
 
 #### AWS ECS
 ```bash
 # Build for AWS
-docker build -t contexto-clone .
+docker build -t conjinxto .
 
 # Tag for ECR
-docker tag contexto-clone:latest <aws-account>.dkr.ecr.<region>.amazonaws.com/contexto-clone:latest
+docker tag conjinxto:latest <aws-account>.dkr.ecr.<region>.amazonaws.com/conjinxto:latest
 
 # Push to ECR
-docker push <aws-account>.dkr.ecr.<region>.amazonaws.com/contexto-clone:latest
+docker push <aws-account>.dkr.ecr.<region>.amazonaws.com/conjinxto:latest
 ```
 
 #### Google Cloud Run
 ```bash
 # Build and push
-gcloud builds submit --tag gcr.io/<project-id>/contexto-clone
+gcloud builds submit --tag gcr.io/<project-id>/conjinxto
 
 # Deploy
-gcloud run deploy contexto-clone \
-  --image gcr.io/<project-id>/contexto-clone \
+gcloud run deploy conjinxto \
+  --image gcr.io/<project-id>/conjinxto \
   --platform managed \
   --port 80
 ```

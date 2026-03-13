@@ -80,7 +80,7 @@ Conjinxto is a word-guessing game where players try to find a secret word by mak
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd contexto-clone
+cd conjinxto
 
 # Install dependencies
 npm install
