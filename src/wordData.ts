@@ -108,20 +108,17 @@ export const targetWords = [
   'jungle', 'cave', 'forest', 'flower', 'cloud', 'storm', 'lightning',
   'desert', 'lake', 'cliff', 'volcano', 'valley', 'tide', 'meadow',
   'swamp', 'canyon', 'glacier',
-  'archipelago', 'aurora', 'avalanche', 'bay', 'blizzard', 'blossom',
-  'bog', 'brook', 'bush', 'coast', 'comet', 'coral', 'crater', 'creek',
-  'cyclone', 'delta', 'dew', 'dune', 'earthquake', 'eclipse', 'estuary',
-  'fjord', 'fog', 'fossil', 'frost', 'geyser', 'gorge', 'granite', 'gravel',
+  'aurora', 'avalanche', 'bay', 'blizzard', 'blossom',
+  'brook', 'bush', 'coast', 'comet', 'coral', 'crater', 'creek',
+  'cyclone', 'dew', 'dune', 'earthquake', 'eclipse', 'fog', 'fossil', 'frost', 'geyser', 'gorge', 'granite', 'gravel',
   'grove', 'gulf', 'hail', 'hill', 'horizon', 'hurricane', 'inlet', 'lagoon',
   'lava', 'leaf', 'marsh', 'mist', 'moss', 'mud', 'oasis', 'pebble', 'peak',
-  'plain', 'plateau', 'pond', 'prairie', 'reef', 'ridge', 'ripple', 'root',
-  'savanna', 'shore', 'slope', 'smoke', 'soil', 'stream', 'summit', 'surf',
+  'plain', 'pond', 'prairie', 'reef', 'ridge', 'ripple', 'root',
+  'shore', 'slope', 'smoke', 'soil', 'stream', 'summit', 'surf',
   'thorn', 'thunder', 'tornado', 'trail', 'tsunami', 'tundra', 'twilight',
   'waterfall', 'wave', 'wilderness', 'willow', 'wood', 'fern', 'pine',
   'oak', 'palm', 'bamboo', 'ivy', 'vine', 'bark', 'petal', 'seed', 'twig',
-  'clay', 'ash', 'ember', 'flint', 'driftwood', 'lichen', 'heath',
-
-  // Objects & Artifacts
+  'clay', 'ash', 'ember', // Objects & Artifacts
   'sword', 'crown', 'ring', 'key', 'ship', 'castle', 'bridge', 'tower',
   'mirror', 'knife', 'gold', 'diamond', 'treasure', 'map', 'clock',
   'lamp', 'arrow', 'shield', 'anchor', 'coin',
@@ -226,9 +223,8 @@ export const targetWords = [
   'matter', 'metal', 'microscope', 'molecule', 'mutation', 'network',
   'neuron', 'nuclear', 'particle', 'plasma', 'protein', 'radiation',
   'reaction', 'signal', 'software', 'telescope', 'theory', 'vaccine',
-  'wavelength', 'antenna', 'current', 'drone', 'electric', 'flux',
-  'fractal', 'grid', 'ion', 'logic', 'microbe', 'orbit', 'pixel',
-  'program', 'pulse', 'quantum', 'resonance', 'satellite', 'sensor',
+  'antenna', 'current', 'drone', 'electric', 'grid', 'ion', 'logic', 'microbe', 'orbit', 'pixel',
+  'program', 'pulse', 'quantum', 'satellite', 'sensor',
   'simulation', 'static', 'synthetic', 'voltage', 'wireless',
 
   // Time & History
@@ -309,12 +305,12 @@ export const targetWords = [
   'satire', 'epic', 'fable', 'sonata',
 
   // Architecture & Structures
-  'arch', 'atrium', 'balcony', 'buttress', 'column', 'dome', 'facade',
-  'fountain', 'hall', 'nave', 'parapet', 'pinnacle', 'porch', 'pyramid',
-  'rampart', 'scaffold', 'spire', 'staircase', 'steeple', 'turret',
-  'wall', 'amphitheater', 'aqueduct', 'battlement', 'catacomb', 'chapel',
-  'colonnade', 'drawbridge', 'gate', 'keep', 'moat', 'obelisk',
-  'pedestal', 'rotunda', 'sewer', 'watchtower',
+  'arch', 'balcony', 'column', 'dome', 'facade',
+  'fountain', 'hall', 'pinnacle', 'porch', 'pyramid',
+  'scaffold', 'spire', 'staircase', 'steeple', 'turret',
+  'wall', 'amphitheater', 'chapel',
+  'drawbridge', 'gate', 'keep', 'moat', 'obelisk',
+  'sewer', 'watchtower',
 
   // Nature — Flora
   'acorn', 'bud', 'cactus', 'clover', 'dahlia', 'daisy', 'dandelion',
@@ -344,12 +340,9 @@ export const targetWords = [
   'latch', 'lock', 'peg', 'pin', 'rack', 'rail', 'tap',
 
   // Food — Cooking & Ingredients
-  'broth', 'brine', 'dough', 'glaze', 'marinade', 'paste', 'roux',
-  'seasoning', 'stock', 'stuffing', 'yeast', 'zest', 'batter',
-  'crust', 'filling', 'frosting', 'gravy', 'grease', 'marmalade',
-  'molasses', 'pickle', 'relish', 'sherbet', 'sorbet', 'starch',
-
-  // Social & Civilization
+  'broth', 'dough', 'glaze', 'marinade', 'paste', 'seasoning', 'stock', 'stuffing', 'yeast', 'zest', 'batter',
+  'crust', 'filling', 'frosting', 'gravy', 'marmalade',
+  'molasses', 'pickle', 'relish', 'sherbet', 'sorbet', // Social & Civilization
   'army', 'census', 'clan', 'council', 'culture',
   'custom', 'democracy', 'economy', 'election', 'government',
   'guild', 'jury', 'language', 'monarchy', 'nation', 'parliament',
@@ -358,60 +351,41 @@ export const targetWords = [
 
   // Music — Instruments
   'banjo', 'bass', 'cello', 'clarinet', 'cymbal', 'fiddle', 'guitar',
-  'harmonica', 'keyboard', 'mandolin', 'oboe', 'organ', 'saxophone',
-  'trombone', 'trumpet', 'tuba', 'ukulele', 'violin', 'xylophone',
-  'accordion', 'bagpipe', 'bugle', 'clavichord', 'harpsichord', 'sitar',
-  'tambourine', 'triangle',
+  'harmonica', 'keyboard', 'organ', 'saxophone',
+  'trumpet', 'violin', 'accordion', 'tambourine', 'triangle',
 
   // Tools & Crafts
-  'chisel', 'clamp', 'drill', 'file', 'grinder', 'lathe', 'mallet',
-  'needle', 'pliers', 'saw', 'scalpel', 'scissors', 'shovel', 'sickle',
-  'tong', 'wrench', 'awl', 'bellows', 'caliper', 'crowbar',
-  'gimlet', 'level', 'plumb', 'shears', 'vise',
-
-  // Celestial & Cosmic
+  'chisel', 'drill', 'file', 'mallet',
+  'needle', 'pliers', 'saw', 'scalpel', 'scissors', 'shovel', 'wrench', 'crowbar',
+  'level', // Celestial & Cosmic
   'asteroid', 'constellation', 'cosmos',
-  'meteor', 'nebula', 'nova', 'pulsar', 'quasar', 'supernova',
-  'universe', 'void', 'zenith', 'equinox', 'solstice', 'apogee', 'perigee',
-
-  // Abstract Qualities
-  'absurdity', 'accuracy', 'ambiguity', 'authenticity', 'clarity',
+  'meteor', 'nebula', 'nova', 'supernova',
+  'universe', 'void', 'zenith', 'equinox', 'solstice', // Abstract Qualities
+  'accuracy', 'ambiguity', 'clarity',
   'complexity', 'consistency', 'creativity',
   'efficiency', 'elegance', 'equality', 'excellence', 'fragility',
   'generosity', 'harmony', 'integrity', 'intensity',
   'intuition', 'mortality', 'nobility', 'originality', 'purity',
-  'simplicity', 'solitude', 'spontaneity', 'symmetry', 'vulnerability',
+  'simplicity', 'solitude', 'symmetry', 'vulnerability',
 
   // Military & Conflict
-  'battalion', 'cavalry', 'coup', 'flanking',
-  'garrison', 'grenade', 'infantry', 'militia', 'navy', 'platoon',
-  'regiment', 'skirmish', 'squadron', 'strategy', 'tactics',
-  'trench', 'truce', 'veteran', 'volley',
-
-  // Geography
-  'equator', 'latitude', 'longitude', 'meridian',
-  'pole', 'strait', 'tropic', 'atoll',
-  'divide', 'escarpment', 'floodplain', 'headland', 'icecap', 'moraine',
-  'permafrost', 'quicksand', 'ravine', 'sinkhole',
-  'tributary', 'watershed',
-
+  'cavalry', 'coup', 'grenade', 'infantry', 'militia', 'navy', 'skirmish', 'strategy', 'tactics',
+  'trench', 'truce', 'veteran', // Geography
+  'pole', 'tropic', 'divide', 'quicksand', 'ravine', 'sinkhole',
   // Health & Medicine
-  'allergy', 'anesthesia', 'antibiotic', 'antidote', 'bandage', 'biopsy',
-  'cancer', 'coma', 'defibrillator', 'diagnosis', 'dialysis', 'epidemic',
-  'fracture', 'hemorrhage', 'immunity', 'injection', 'insomnia', 'malaria',
+  'allergy', 'antibiotic', 'antidote', 'bandage', 'cancer', 'coma', 'diagnosis', 'epidemic',
+  'fracture', 'immunity', 'injection', 'insomnia', 'malaria',
   'migraine', 'morphine', 'nausea', 'obesity', 'pandemic', 'paralysis',
-  'pathogen', 'pneumonia', 'prescription', 'quarantine', 'recovery',
+  'pneumonia', 'prescription', 'quarantine', 'recovery',
   'relapse', 'scar', 'seizure', 'surgery', 'symptom', 'therapy',
-  'transfusion', 'tumor', 'ulcer', 'venom', 'vertigo', 'withdrawal',
+  'tumor', 'ulcer', 'venom', 'vertigo', 'withdrawal',
 
   // Law & Justice
-  'acquittal', 'alibi', 'allegation', 'appeal', 'bail', 'clause',
+  'alibi', 'allegation', 'appeal', 'bail', 'clause',
   'confession', 'conviction', 'custody', 'decree', 'defendant',
-  'evidence', 'execution', 'extradition', 'felony', 'fraud', 'hearing',
-  'indictment', 'injunction', 'lawsuit', 'legislation', 'mandate',
-  'pardon', 'parole', 'patent', 'penalty', 'perjury', 'plaintiff',
-  'probation', 'prosecution', 'sanction', 'sentence', 'subpoena',
-  'testimony', 'verdict', 'warrant',
+  'evidence', 'execution', 'felony', 'fraud', 'hearing',
+  'lawsuit', 'legislation', 'mandate',
+  'pardon', 'parole', 'patent', 'penalty', 'probation', 'prosecution', 'sanction', 'sentence', 'testimony', 'verdict', 'warrant',
 
   // Business & Economy
   'auction', 'bankruptcy', 'bribe', 'broker', 'budget', 'capital',
@@ -450,7 +424,7 @@ export const targetWords = [
   'render', 'storage', 'streaming', 'syntax', 'transistor',
 
   // Emotions & States (extended)
-  'alertness', 'anticipation', 'bewilderment', 'brazenness', 'cheerfulness',
+  'alertness', 'anticipation', 'bewilderment', 'cheerfulness',
   'claustrophobia', 'cowardice', 'cynicism', 'daydream', 'defiance',
   'denial', 'devotion', 'disdain', 'eagerness', 'embarrassment',
   'empowerment', 'entitlement', 'exasperation', 'fixation', 'foreboding',
@@ -459,22 +433,15 @@ export const targetWords = [
   'outrage', 'overwhelm', 'possessiveness', 'resignation',
 
   // Science extended
-  'amplitude', 'capacitor', 'cathode', 'chromosome', 'combustion',
-  'conductor', 'diffusion', 'electrode', 'embryo', 'enzyme', 'equilibrium',
-  'evaporation', 'fermentation', 'friction', 'inertia', 'insulator',
-  'kinetics', 'magnetism', 'metabolism', 'momentum', 'neutron', 'nucleus',
-  'osmosis', 'oxidation', 'photon', 'photosynthesis', 'proton', 'refraction',
-  'respiration', 'semiconductor', 'thermodynamics', 'velocity', 'viscosity',
-
-  // People (extended)
-  'acrobat', 'alchemist', 'ambassador', 'anarchist', 'antiquarian',
-  'apothecary', 'aristocrat', 'astronomer', 'bureaucrat',
-  'chancellor', 'charlatan', 'cobbler', 'colonist', 'conscript', 'consul',
-  'corsair', 'courtier', 'cultist', 'diplomat', 'drifter', 'fanatic',
-  'fugitive', 'gravedigger', 'groundskeeper',
-  'highwayman', 'hostage', 'inquisitor', 'innkeeper', 'liberator',
+  'chromosome', 'combustion',
+  'embryo', 'enzyme', 'evaporation', 'fermentation', 'friction', 'magnetism', 'metabolism', 'momentum', 'neutron', 'nucleus',
+  'photosynthesis', 'proton', 'respiration', 'velocity', // People (extended)
+  'acrobat', 'alchemist', 'ambassador', 'anarchist', 'aristocrat', 'astronomer', 'bureaucrat',
+  'chancellor', 'charlatan', 'cobbler', 'colonist', 'consul',
+  'courtier', 'cultist', 'diplomat', 'drifter', 'fanatic',
+  'fugitive', 'highwayman', 'hostage', 'innkeeper', 'liberator',
   'locksmith', 'lumberjack', 'marauder', 'midwife', 'overseer',
-  'pathfinder', 'pilgrim', 'quartermaster', 'renegade', 'sentry',
+  'pathfinder', 'pilgrim', 'renegade', 'sentry',
   'smuggler', 'sorcerer', 'squire', 'steward', 'warlord',
 
   // Final fill — common nouns with strong semantic neighborhoods

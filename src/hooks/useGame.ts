@@ -17,19 +17,23 @@ function loadGameState(): GameState {
     const savedDate = localStorage.getItem(STORAGE_DATE_KEY);
     const today = new Date().toDateString();
     
-    // If we have saved state and it's from today, restore it
-    if (savedState && savedDate === today) {
+    if (savedState) {
       const parsed = JSON.parse(savedState) as GameState;
       const currentGameNumber = getGameNumber();
-      // Ensure attempts, hintsUsed, gameNumber, statsRecorded, and gameMode have default values if missing
-      return {
-        ...parsed,
-        attempts: parsed.attempts ?? 0,
-        hintsUsed: parsed.hintsUsed ?? 0,
-        gameNumber: parsed.gameNumber ?? currentGameNumber,
-        statsRecorded: parsed.statsRecorded ?? false,
-        gameMode: parsed.gameMode ?? 'daily',
-      };
+      const mode = parsed.gameMode ?? 'daily';
+      // Restore daily games only if from today; practice/archive restore if incomplete
+      const isToday = savedDate === today;
+      const isResumable = mode !== 'daily' && !parsed.isComplete;
+      if (isToday || isResumable) {
+        return {
+          ...parsed,
+          attempts: parsed.attempts ?? 0,
+          hintsUsed: parsed.hintsUsed ?? 0,
+          gameNumber: parsed.gameNumber ?? currentGameNumber,
+          statsRecorded: parsed.statsRecorded ?? false,
+          gameMode: mode,
+        };
+      }
     }
     
     // Otherwise, start a new game with today's word
@@ -289,8 +293,6 @@ export function useGame() {
     setGameState(newState);
     setInputWord('');
     setError(null);
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(STORAGE_DATE_KEY);
   }, []);
 
   const playArchiveGame = useCallback((archiveGameNumber: number) => {
@@ -310,11 +312,6 @@ export function useGame() {
     setGameState(newState);
     setInputWord('');
     setError(null);
-    // Clear localStorage only when switching to a past archive game
-    if (!isToday) {
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(STORAGE_DATE_KEY);
-    }
   }, []);
 
   return {
