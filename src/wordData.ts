@@ -65,9 +65,67 @@ export const englishWords = [
 
 // Target words pool (subset of available words with good semantic connections)
 export const targetWords = [
-  'dog', 'cat', 'ocean', 'mountain', 'book', 'music', 'love', 'tree', 
+  // Original 24
+  'dog', 'cat', 'ocean', 'mountain', 'book', 'music', 'love', 'tree',
   'sun', 'rain', 'happy', 'phone', 'dance', 'coffee', 'pizza', 'dream',
-  'heart', 'night', 'morning', 'river', 'house', 'friend', 'family', 'apple'
+  'heart', 'night', 'morning', 'river', 'house', 'friend', 'family', 'apple',
+
+  // Animals
+  'wolf', 'fox', 'bear', 'lion', 'tiger', 'eagle', 'shark', 'whale',
+  'snake', 'horse', 'rabbit', 'deer', 'butterfly', 'owl', 'bee', 'crow',
+  'frog', 'penguin', 'parrot', 'spider',
+
+  // Food & Drink
+  'bread', 'cheese', 'wine', 'beer', 'soup', 'chocolate', 'honey',
+  'sugar', 'lemon', 'strawberry', 'banana', 'grape', 'egg', 'milk',
+  'butter', 'cake', 'mushroom', 'pepper', 'salt', 'cookie',
+
+  // Nature & Elements
+  'fire', 'earth', 'wind', 'rock', 'sand', 'ice', 'snow', 'island',
+  'jungle', 'cave', 'forest', 'flower', 'cloud', 'storm', 'lightning',
+  'desert', 'lake', 'cliff', 'volcano', 'valley', 'tide', 'meadow',
+  'swamp', 'canyon', 'glacier',
+
+  // Objects & Artifacts
+  'sword', 'crown', 'ring', 'key', 'ship', 'castle', 'bridge', 'tower',
+  'mirror', 'knife', 'gold', 'diamond', 'treasure', 'map', 'clock',
+  'lamp', 'arrow', 'shield', 'anchor', 'coin',
+
+  // Concepts & Abstract
+  'war', 'peace', 'death', 'birth', 'god', 'angel', 'ghost', 'dragon',
+  'magic', 'hero', 'shadow', 'soul', 'fate', 'luck', 'power', 'freedom',
+  'truth', 'beauty', 'wisdom', 'justice', 'chaos', 'silence', 'memory',
+  'myth', 'curse', 'legend',
+
+  // People & Roles
+  'king', 'queen', 'soldier', 'farmer', 'artist', 'doctor', 'teacher',
+  'hunter', 'sailor', 'pirate', 'knight', 'wizard', 'mother', 'father',
+  'child', 'stranger', 'enemy', 'monk',
+
+  // Places
+  'city', 'village', 'market', 'temple', 'church', 'museum', 'library',
+  'garden', 'park', 'beach', 'harbor', 'prison', 'palace', 'tavern',
+  'arena', 'ruins',
+
+  // Body & Mind
+  'blood', 'brain', 'eye', 'hand', 'bone', 'skin', 'hair', 'breath',
+  'voice', 'mind', 'spirit', 'wound', 'smile',
+
+  // Emotions & States
+  'anger', 'fear', 'joy', 'grief', 'pride', 'shame', 'hope', 'faith',
+  'wonder', 'trust', 'envy', 'guilt', 'courage', 'despair',
+
+  // Science & Space
+  'star', 'planet', 'moon', 'galaxy', 'atom', 'virus', 'medicine',
+  'robot', 'machine', 'engine', 'gravity', 'oxygen',
+
+  // Time & Seasons
+  'dawn', 'dusk', 'midnight', 'spring', 'summer', 'autumn', 'winter',
+  'age', 'moment', 'past', 'future', 'century',
+
+  // Actions
+  'fight', 'hunt', 'fall', 'rise', 'build', 'heal', 'grow', 'break',
+  'hide', 'pray', 'steal', 'escape', 'return', 'survive',
 ];
 
 // Get random target word
