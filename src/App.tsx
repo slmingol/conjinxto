@@ -410,7 +410,9 @@ function App() {
           <WinModal
             targetWord={gameState.targetWord}
             attempts={gameState.attempts}
+            gameMode={gameState.gameMode}
             onNewGame={handleResetGame}
+            onNewPractice={() => { setShowWinModal(false); playPracticeGame(); }}
             onClose={() => setShowWinModal(false)}
             theme={theme}
             t={t}

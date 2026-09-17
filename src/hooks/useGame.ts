@@ -270,7 +270,10 @@ export function useGame() {
 
   const playPracticeGame = useCallback(() => {
     const currentGameNumber = getGameNumber();
-    if (currentGameNumber <= 1) return;
+    if (currentGameNumber <= 1) {
+      setError('No past games available yet. Check back tomorrow!');
+      return;
+    }
     const randomGameNumber = Math.floor(Math.random() * (currentGameNumber - 1)) + 1;
     const targetWord = getWordByGameNumber(randomGameNumber);
     const newState: GameState = {
