@@ -86,7 +86,7 @@ export function useGame() {
 
   // Record statistics when a game is won (only once, and only for daily games)
   useEffect(() => {
-    if (gameState.isComplete && gameState.guesses.length > 0 && !gameState.statsRecorded && gameState.gameMode === 'daily') {
+    if (gameState.isComplete && gameState.guesses.length > 0 && !gameState.statsRecorded && (gameState.gameMode === 'daily')) {
       const hasWon = gameState.guesses.some(g => g.word.toLowerCase() === gameState.targetWord.toLowerCase());
       if (hasWon) {
         recordWin(gameState.attempts);
@@ -268,6 +268,28 @@ export function useGame() {
     }
   }, [gameState]);
 
+  const playPracticeGame = useCallback(() => {
+    const currentGameNumber = getGameNumber();
+    if (currentGameNumber <= 1) return;
+    const randomGameNumber = Math.floor(Math.random() * (currentGameNumber - 1)) + 1;
+    const targetWord = getWordByGameNumber(randomGameNumber);
+    const newState: GameState = {
+      guesses: [],
+      targetWord,
+      isComplete: false,
+      attempts: 0,
+      hintsUsed: 0,
+      gameNumber: randomGameNumber,
+      statsRecorded: false,
+      gameMode: 'practice',
+    };
+    setGameState(newState);
+    setInputWord('');
+    setError(null);
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_DATE_KEY);
+  }, []);
+
   const playArchiveGame = useCallback((archiveGameNumber: number) => {
     const currentGameNumber = getGameNumber();
     const isToday = archiveGameNumber === currentGameNumber;
@@ -304,5 +326,6 @@ export function useGame() {
     resetGame,
     getHint,
     playArchiveGame,
+    playPracticeGame,
   };
 }

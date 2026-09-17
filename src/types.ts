@@ -5,7 +5,7 @@ export interface Guess {
   isHint?: boolean;
 }
 
-export type GameMode = 'daily' | 'archive';
+export type GameMode = 'daily' | 'archive' | 'practice';
 
 export interface GameState {
   guesses: Guess[];

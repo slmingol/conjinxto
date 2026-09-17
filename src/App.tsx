@@ -52,6 +52,7 @@ function App() {
     resetGame,
     getHint,
     playArchiveGame,
+    playPracticeGame,
   } = useGame();
 
   const [showInstructions, setShowInstructions] = useState(() => {
@@ -219,10 +220,28 @@ function App() {
           onShowSettings={() => setShowSettings(true)}
           onGetHint={handleGetHint}
           onPlayArchive={playArchiveGame}
+          onPlayPractice={playPracticeGame}
           isComplete={gameState.isComplete}
           theme={theme}
           t={t}
         />
+
+        {/* Practice Mode Banner */}
+        {gameState.gameMode === 'practice' && (
+          <div className={`mb-4 px-4 py-3 rounded-lg shadow-lg border-2 ${
+            theme === 'dark'
+              ? 'bg-green-900/30 border-green-600 text-green-200'
+              : 'bg-green-50 border-green-400 text-green-800'
+          }`}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-center sm:text-left">
+              <span className="text-xl">🎯</span>
+              <span className="font-semibold text-sm sm:text-base">
+                <span className="block sm:inline">Practice Mode: Game #{gameState.gameNumber}</span>
+                <span className="block sm:inline sm:ml-1">- Won't affect statistics</span>
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Archive Mode Banner */}
         {gameState.gameMode === 'archive' && (

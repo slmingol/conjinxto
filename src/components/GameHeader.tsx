@@ -15,6 +15,7 @@ interface GameHeaderProps {
   onShowSettings: () => void;
   onGetHint: () => void;
   onPlayArchive: (gameNumber: number) => void;
+  onPlayPractice: () => void;
   isComplete: boolean;
   theme: 'light' | 'dark';
   t: Translations;
@@ -31,6 +32,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
   onShowSettings,
   onGetHint,
   onPlayArchive,
+  onPlayPractice,
   isComplete,
   theme,
   t,
@@ -142,6 +144,17 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
             aria-label={t.newGame}
           >
             {t.newGame}
+          </button>
+          <button
+            onClick={onPlayPractice}
+            className={`px-2 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors shadow-md text-xs font-medium whitespace-nowrap flex items-center ${
+              isDark ? 'bg-green-700/80 hover:bg-green-700 text-white' : 'bg-green-600 hover:bg-green-700 text-white'
+            }`}
+            title="Practice with a random past game (no stats)"
+            aria-label="Practice"
+          >
+            <span className="text-base mr-0.5 md:mr-1">🎯</span>
+            <span className="hidden md:inline">Practice</span>
           </button>
         </div>
         <div className="flex flex-col gap-1">
